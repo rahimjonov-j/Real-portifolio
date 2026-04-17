@@ -24,8 +24,8 @@ export const metadata: Metadata = {
     follow: true
   },
   icons: {
-    icon: [{ url: "/icon.jpg", type: "image/jpeg" }],
-    apple: [{ url: "/apple-icon.jpg", type: "image/jpeg" }]
+    icon: [{ url: "/icon.png", type: "image/png" }],
+    apple: [{ url: "/apple-icon.png", type: "image/png" }]
   },
   openGraph: {
     type: "website",

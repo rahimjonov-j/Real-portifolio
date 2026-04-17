@@ -20,9 +20,27 @@ export async function generateMetadata({
   const { lang } = await params;
   const locale = isLocale(lang) ? lang : "uz";
   const dictionary = getDictionary(locale);
+  const canonicalPath = `/${locale}/about`;
 
   return {
-    title: dictionary.metadata.aboutTitle
+    title: dictionary.metadata.aboutTitle,
+    description: dictionary.about.body,
+    alternates: {
+      canonical: canonicalPath,
+      languages: {
+        uz: "/uz/about",
+        en: "/en/about"
+      }
+    },
+    openGraph: {
+      title: dictionary.metadata.aboutTitle,
+      description: dictionary.about.body,
+      url: canonicalPath
+    },
+    twitter: {
+      title: dictionary.metadata.aboutTitle,
+      description: dictionary.about.body
+    }
   };
 }
 

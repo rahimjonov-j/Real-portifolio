@@ -21,9 +21,31 @@ export async function generateMetadata({
   const { lang } = await params;
   const locale = isLocale(lang) ? lang : "uz";
   const dictionary = getDictionary(locale);
+  const canonicalPath = `/${locale}/projects`;
+  const description =
+    locale === "uz"
+      ? "Frontend loyihalarim va ishlatgan texnologiyalarim ro'yxati."
+      : "A selection of my frontend projects and the technologies I used.";
 
   return {
-    title: dictionary.metadata.projectsTitle
+    title: dictionary.metadata.projectsTitle,
+    description,
+    alternates: {
+      canonical: canonicalPath,
+      languages: {
+        uz: "/uz/projects",
+        en: "/en/projects"
+      }
+    },
+    openGraph: {
+      title: dictionary.metadata.projectsTitle,
+      description,
+      url: canonicalPath
+    },
+    twitter: {
+      title: dictionary.metadata.projectsTitle,
+      description
+    }
   };
 }
 

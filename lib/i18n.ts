@@ -59,7 +59,7 @@ type Dictionary = {
 const sharedProjects = {
   jahonbozori: {
     title: "Jahon bozori",
-    imageSrc: "/img/optimized/jahonbozori-960.jpg",
+    imageSrc: "/img/optimized/jahonbozori-960.webp",
     liveUrl: "https://www.jahonbozori.uz/",
     githubUrl: "https://github.com/rahimjonov-j/Hengtai-savdo",
     imagePosition: "center top",
@@ -68,14 +68,14 @@ const sharedProjects = {
   },
   kotiba: {
     title: "Kotiba Ai",
-    imageSrc: "/img/optimized/kotiba-960.jpg",
+    imageSrc: "/img/optimized/kotiba-960.webp",
     liveUrl: "https://e-kotiba.vercel.app/",
     githubUrl: "https://github.com/rahimjonov-j/e-Kotiba",
     techStack: ["React JS", "Tailwind CSS", "Vite"]
   },
   girgiton: {
     title: "Girgiton Ai",
-    imageSrc: "/img/optimized/girgiton-960.jpg",
+    imageSrc: "/img/optimized/girgiton-960.webp",
     liveUrl: "#",
     githubUrl: "https://github.com/rahimjonov-j/Girgiton-ui",
     techStack: ["React JS", "Vite", "Tailwind CSS", "Lucide"]

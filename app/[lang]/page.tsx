@@ -39,9 +39,27 @@ export async function generateMetadata({
   const { lang } = await params;
   const locale = isLocale(lang) ? lang : "uz";
   const dictionary = getDictionary(locale);
+  const canonicalPath = `/${locale}`;
 
   return {
-    title: dictionary.metadata.homeTitle
+    title: dictionary.metadata.homeTitle,
+    description: dictionary.home.bio,
+    alternates: {
+      canonical: canonicalPath,
+      languages: {
+        uz: "/uz",
+        en: "/en"
+      }
+    },
+    openGraph: {
+      title: dictionary.metadata.homeTitle,
+      description: dictionary.home.bio,
+      url: canonicalPath
+    },
+    twitter: {
+      title: dictionary.metadata.homeTitle,
+      description: dictionary.home.bio
+    }
   };
 }
 
@@ -70,7 +88,8 @@ export default async function HomePage({ params }: HomePageProps) {
                   fill
                   priority
                   sizes="160px"
-                  src="/img/optimized/me-320.jpg"
+                  src="/img/optimized/me-320.webp"
+                  unoptimized
                   style={{ objectFit: "cover", objectPosition: "center 26%" }}
                 />
               </div>

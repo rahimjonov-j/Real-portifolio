@@ -39,6 +39,7 @@ export function ProjectCard({
           priority={priority}
           sizes="(max-width: 900px) calc(100vw - 40px), 320px"
           src={imageSrc}
+          unoptimized
           style={{ objectPosition: imagePosition }}
         />
       </div>

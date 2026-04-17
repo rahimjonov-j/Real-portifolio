@@ -69,7 +69,15 @@
             font-weight: 700;
             color: #1a1a1a;
             cursor: pointer;
-            
+        }
+
+        .logo-link,
+        .logo-link:visited,
+        .logo-link:hover,
+        .logo-link:active {
+            display: inline-block;
+            color: #1a1a1a;
+            text-decoration: none !important;
         }
 
         nav a {
@@ -137,9 +145,20 @@
         }
 
         .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             color: #1a1a1a;
             font-size: 1.6rem;
+            line-height: 1;
+            text-decoration: none !important;
             transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .social-links a:visited,
+        .social-links a:hover,
+        .social-links a:active {
+            text-decoration: none !important;
         }
 
         .social-links i {
@@ -210,7 +229,9 @@
 
     <div class="container fade-in">
         <header>
-     <a href="#">       <div class="logo">Javohir dev </div></a>
+            <a class="logo-link" href="./index.html">
+                <span class="logo">Javohir dev</span>
+            </a>
             <nav>
                 <a href="./projects.html">Projects</a>
             </nav>
@@ -241,9 +262,9 @@
                     <h2>Frontend Dasturchisi</h2>
                     <div class="social-links">
                
-                        <a href="https://github.com/rahimjonov-j" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="https://www.linkedin.com/in/javohir-rahimjonov" target="_blank"><i class="fab fa-linkedin"></i></a>
-                        <a href="https://t.me/rahimjonovv_19" target="_blank"><i class="fab fa-telegram"></i></a>
+                        <a href="https://github.com/rahimjonov-j" target="_blank" rel="noreferrer"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/javohir-rahimjonov" target="_blank" rel="noreferrer"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://t.me/rahimjonovv_19" target="_blank" rel="noreferrer"><i class="fab fa-telegram"></i></a>
                     </div>
                 </div>
             </div>

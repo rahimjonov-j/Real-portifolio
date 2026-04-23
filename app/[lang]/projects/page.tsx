@@ -10,22 +10,15 @@ import {
   isLocale,
   type Locale
 } from "@/lib/i18n";
-import { getProjects, createProjectsTable } from "@/lib/db";
+import {
+  createProjectsTable,
+  getProjects,
+  hasDatabaseConnection,
+  type ProjectRow
+} from "@/lib/db";
 
 type ProjectsPageProps = {
   params: Promise<{ lang: string }>;
-};
-
-type ProjectRow = {
-  title: string;
-  description_uz: string;
-  description_en: string;
-  image_src: string;
-  live_url?: string | null;
-  github_url?: string | null;
-  image_position?: string;
-  priority?: boolean;
-  tech_stack: string[];
 };
 
 type ProjectItem = {
@@ -79,25 +72,26 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
   const locale = (isLocale(lang) ? lang : "uz") as Locale;
   const dictionary = getDictionary(locale);
 
-  // Fetch dynamic projects directly from DB
   let dynamicProjects: ProjectItem[] = [];
-  try {
-    // Ensure table exists
-    await createProjectsTable();
-    const data = (await getProjects()) as ProjectRow[];
-    dynamicProjects = data.map((p) => ({
-      title: p.title,
-      description: locale === "uz" ? p.description_uz : p.description_en,
-      imageSrc: p.image_src,
-      liveUrl: p.live_url || "#",
-      githubUrl: p.github_url || "#",
-      imageAlt: p.title,
-      imagePosition: p.image_position,
-      priority: p.priority,
-      techStack: p.tech_stack
-    }));
-  } catch (error) {
-    console.error("Failed to fetch projects from DB:", error);
+
+  if (hasDatabaseConnection()) {
+    try {
+      await createProjectsTable();
+      const data = (await getProjects()) as ProjectRow[];
+      dynamicProjects = data.map((p) => ({
+        title: p.title,
+        description: locale === "uz" ? p.description_uz : p.description_en,
+        imageSrc: p.image_src,
+        liveUrl: p.live_url || "#",
+        githubUrl: p.github_url || "#",
+        imageAlt: p.title,
+        imagePosition: p.image_position || "center",
+        priority: Boolean(p.priority),
+        techStack: p.tech_stack
+      }));
+    } catch (error) {
+      console.error("Failed to fetch projects from DB:", error);
+    }
   }
 
   const allProjects = [...dynamicProjects, ...dictionary.projects.items];

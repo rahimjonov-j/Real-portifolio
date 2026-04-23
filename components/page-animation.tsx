@@ -6,17 +6,17 @@ export function PageAnimation({ children }: { children: React.ReactNode }) {
   const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
-    // Check if we've already animated in this session
     const animated = sessionStorage.getItem("has-animated");
-    if (animated) {
-      setHasAnimated(true);
-    } else {
-      // Small delay to ensure smooth start
-      const timer = setTimeout(() => {
+
+    const timer = setTimeout(() => {
+      if (animated) {
+        setHasAnimated(true);
+      } else {
         sessionStorage.setItem("has-animated", "true");
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
+      }
+    }, animated ? 0 : 1000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (

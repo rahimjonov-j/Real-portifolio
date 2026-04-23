@@ -24,6 +24,8 @@ function normalizeProject(body: Record<string, unknown>): ProjectInput {
     title: String(body.title ?? "").trim(),
     description_uz: String(body.description_uz ?? "").trim(),
     description_en: String(body.description_en ?? "").trim(),
+    details_uz: String(body.details_uz ?? "").trim(),
+    details_en: String(body.details_en ?? "").trim(),
     image_src: String(body.image_src ?? "").trim(),
     live_url: normalizeOptionalUrl(body.live_url),
     github_url: normalizeOptionalUrl(body.github_url),
@@ -37,6 +39,8 @@ function validateProject(project: ProjectInput) {
   if (!project.title) return "Loyiha nomi majburiy.";
   if (!project.description_uz) return "O'zbekcha tavsif majburiy.";
   if (!project.description_en) return "Inglizcha tavsif majburiy.";
+  if (!project.details_uz) return "O'zbekcha batafsil ma'lumot majburiy.";
+  if (!project.details_en) return "Inglizcha batafsil ma'lumot majburiy.";
   if (!project.image_src) return "Rasm manzili majburiy.";
   if (project.tech_stack.length === 0) return "Kamida bitta texnologiya kiriting.";
   return null;

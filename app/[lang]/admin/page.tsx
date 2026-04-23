@@ -7,6 +7,8 @@ type ProjectForm = {
   title: string;
   description_uz: string;
   description_en: string;
+  details_uz: string;
+  details_en: string;
   image_src: string;
   live_url: string;
   github_url: string;
@@ -27,6 +29,8 @@ const emptyProject: ProjectForm = {
   title: "",
   description_uz: "",
   description_en: "",
+  details_uz: "",
+  details_en: "",
   image_src: "",
   live_url: "",
   github_url: "",
@@ -248,6 +252,21 @@ export default function AdminPage() {
 
           <label className="block">
             <span className="text-sm font-semibold text-[#334155] dark:text-[#cbd5e1]">
+              Batafsil UZ
+            </span>
+            <textarea
+              className="mt-2 min-h-36 w-full rounded-2xl border border-[#dbe4ef] bg-white px-4 py-3 text-[#111827] outline-none transition focus:border-[#2563eb] dark:border-[#243142] dark:bg-[#0f172a] dark:text-white"
+              onChange={(event) =>
+                updateProject("details_uz", event.target.value)
+              }
+              placeholder="Project haqida to'liqroq ma'lumot yozing..."
+              required
+              value={project.details_uz}
+            />
+          </label>
+
+          <label className="block">
+            <span className="text-sm font-semibold text-[#334155] dark:text-[#cbd5e1]">
               Description EN
             </span>
             <textarea
@@ -257,6 +276,21 @@ export default function AdminPage() {
               }
               required
               value={project.description_en}
+            />
+          </label>
+
+          <label className="block">
+            <span className="text-sm font-semibold text-[#334155] dark:text-[#cbd5e1]">
+              Details EN
+            </span>
+            <textarea
+              className="mt-2 min-h-36 w-full rounded-2xl border border-[#dbe4ef] bg-white px-4 py-3 text-[#111827] outline-none transition focus:border-[#2563eb] dark:border-[#243142] dark:bg-[#0f172a] dark:text-white"
+              onChange={(event) =>
+                updateProject("details_en", event.target.value)
+              }
+              placeholder="Write a fuller project description..."
+              required
+              value={project.details_en}
             />
           </label>
 

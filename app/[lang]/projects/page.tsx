@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@/components/icons";
-import { ProjectCard } from "@/components/project-card";
+import {
+  ProjectsGallery,
+  type ProjectGalleryItem
+} from "@/components/projects-gallery";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import {
@@ -19,18 +22,6 @@ import {
 
 type ProjectsPageProps = {
   params: Promise<{ lang: string }>;
-};
-
-type ProjectItem = {
-  title: string;
-  description: string;
-  imageSrc: string;
-  liveUrl: string;
-  githubUrl: string;
-  imageAlt: string;
-  imagePosition?: string;
-  priority?: boolean;
-  techStack: string[];
 };
 
 export async function generateMetadata({
@@ -72,15 +63,19 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
   const locale = (isLocale(lang) ? lang : "uz") as Locale;
   const dictionary = getDictionary(locale);
 
-  let dynamicProjects: ProjectItem[] = [];
+  let dynamicProjects: ProjectGalleryItem[] = [];
 
   if (hasDatabaseConnection()) {
     try {
       await createProjectsTable();
       const data = (await getProjects()) as ProjectRow[];
       dynamicProjects = data.map((p) => ({
+        slug: `db-${p.id}`,
         title: p.title,
         description: locale === "uz" ? p.description_uz : p.description_en,
+        details:
+          (locale === "uz" ? p.details_uz : p.details_en) ||
+          (locale === "uz" ? p.description_uz : p.description_en),
         imageSrc: p.image_src,
         liveUrl: p.live_url || "#",
         githubUrl: p.github_url || "#",
@@ -121,17 +116,12 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
           </Link>
         </div>
 
-        <section className="grid grid-cols-1 gap-[22px] md:grid-cols-2 lg:grid-cols-3">
-          {allProjects.map((project, idx) => (
-            <ProjectCard
-              key={`${project.title}-${idx}`}
-              {...project}
-              githubLabel={dictionary.projects.github}
-              liveLabel={dictionary.projects.live}
-              techLabel={dictionary.projects.techLabel}
-            />
-          ))}
-        </section>
+        <ProjectsGallery
+          githubLabel={dictionary.projects.github}
+          liveLabel={dictionary.projects.live}
+          projects={allProjects}
+          techLabel={dictionary.projects.techLabel}
+        />
 
         <SiteFooter />
       </div>

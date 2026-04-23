@@ -22,6 +22,15 @@ html {
   transition: none !important;
 }
 
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   min-height: 100vh;
   background: var(--background);

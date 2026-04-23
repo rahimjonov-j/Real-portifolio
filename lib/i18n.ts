@@ -43,8 +43,10 @@ type Dictionary = {
     live: string;
     github: string;
     items: Array<{
+      slug: string;
       title: string;
       description: string;
+      details: string;
       imageAlt: string;
       liveUrl: string;
       githubUrl: string;
@@ -58,6 +60,7 @@ type Dictionary = {
 
 const sharedProjects = {
   jahonbozori: {
+    slug: "jahon-bozori",
     title: "Jahon bozori",
     imageSrc: "/img/optimized/jahonbozori-960.webp",
     liveUrl: "https://www.jahonbozori.uz/",
@@ -67,6 +70,7 @@ const sharedProjects = {
     techStack: ["Tailwind CSS", "React JS"]
   },
   kotiba: {
+    slug: "kotiba-ai",
     title: "Kotiba Ai",
     imageSrc: "/img/optimized/kotiba-960.webp",
     liveUrl: "https://e-kotiba.vercel.app/",
@@ -74,6 +78,7 @@ const sharedProjects = {
     techStack: ["React JS", "Tailwind CSS", "Vite"]
   },
   girgiton: {
+    slug: "girgiton-ai",
     title: "Girgiton Ai",
     imageSrc: "/img/optimized/girgiton-960.webp",
     liveUrl: "#",
@@ -126,18 +131,24 @@ const dictionaries: Record<Locale, Dictionary> = {
           ...sharedProjects.jahonbozori,
           description:
             "Farg'onadagi yirik savdo markazi uchun minimal va qulay sotuv platformasi.",
+          details:
+            "Jahon bozori loyihasida savdo markazi mahsulot va xizmatlarini internetda sodda, tez va tushunarli ko'rsatish maqsad qilingan. Interfeys minimal uslubda qurilgan, asosiy e'tibor foydalanuvchini kerakli bo'limga tez olib borish, mobil qurilmalarda qulay ko'rinish va sotuv jarayonini ortiqcha murakkabliksiz tashkil qilishga qaratilgan.",
           imageAlt: "Jahonbozori loyiha rasmi"
         },
         {
           ...sharedProjects.kotiba,
           description:
             "Sizning online yordamchingiz, eslatmalar va uchrashuvlarni belgilab, eslatib turuvchi aqlli yordamchi.",
+          details:
+            "Kotiba AI foydalanuvchining kundalik ishlarini tartiblashga yordam beradigan yordamchi sifatida ishlab chiqilgan. Loyiha eslatmalar, uchrashuvlar va vazifalarni qulay boshqarishga urg'u beradi. Frontend qismida toza struktura, tez yuklanish va foydalanuvchi ko'p o'ylamasdan harakat qila oladigan oqim yaratishga e'tibor berilgan.",
           imageAlt: "Kotiba loyiha rasmi"
         },
         {
           ...sharedProjects.girgiton,
           description:
             "Ofitsiantlar xizmat tezligini sezilarli darajada oshirishga yordam bergan loyiha.",
+          details:
+            "Girgiton AI restoran va xizmat ko'rsatish jarayonlarida tezlikni oshirishga qaratilgan loyiha. Interfeys ofitsiantlar uchun buyurtma va xizmat jarayonini soddalashtirish, vaqtni tejash va xatolarni kamaytirish g'oyasi atrofida qurilgan. Dizaynda tez anglash, yirik bosiladigan elementlar va real ish jarayoniga mos foydalanish qulayligi muhim bo'lgan.",
           imageAlt: "Girgiton AI loyiha rasmi"
         }
       ]
@@ -186,18 +197,24 @@ const dictionaries: Record<Locale, Dictionary> = {
           ...sharedProjects.jahonbozori,
           description:
             "A minimal and user-friendly sales platform for a major shopping center in Fergana.",
+          details:
+            "Jahon bozori was built to present a shopping center's products and services online in a simple, fast, and clear way. The interface keeps the experience minimal while helping visitors reach the right section quickly, browse comfortably on mobile, and move through the sales flow without unnecessary complexity.",
           imageAlt: "Jahon bozori project image"
         },
         {
           ...sharedProjects.kotiba,
           description:
             "Your online assistant: a smart helper that keeps notes and reminds you about meetings.",
+          details:
+            "Kotiba AI is designed as a practical assistant for organizing daily work. It focuses on managing notes, meetings, and reminders through a clean and understandable interface. The frontend prioritizes structure, fast loading, and a flow that lets users complete tasks without overthinking.",
           imageAlt: "Kotiba project image"
         },
         {
           ...sharedProjects.girgiton,
           description:
             "A project that helped significantly increase the service speed of waiters.",
+          details:
+            "Girgiton AI focuses on improving speed in restaurant and service workflows. The interface is shaped around helping waiters simplify orders and service steps, save time, and reduce mistakes. The design emphasizes quick understanding, large actionable controls, and usability that fits real operational work.",
           imageAlt: "Girgiton AI project image"
         }
       ]

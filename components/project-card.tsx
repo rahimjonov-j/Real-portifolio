@@ -1,10 +1,13 @@
 import Image from "next/image";
+import Link from "next/link";
 
 type ProjectCardProps = {
   title: string;
   description: string;
   liveUrl: string;
   githubUrl: string;
+  detailsUrl?: string;
+  onDetailsClick?: () => void;
   liveLabel: string;
   githubLabel: string;
   techLabel: string;
@@ -20,6 +23,8 @@ export function ProjectCard({
   description,
   liveUrl,
   githubUrl,
+  detailsUrl,
+  onDetailsClick,
   liveLabel,
   githubLabel,
   techLabel,
@@ -29,8 +34,24 @@ export function ProjectCard({
   priority = false,
   techStack
 }: ProjectCardProps) {
+  const detailsLabel = `${title} batafsil ma'lumot`;
+
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-[24px] border border-[#e7eef6] bg-[rgba(255,255,255,0.94)] shadow-[0_18px_50px_rgba(15,23,42,0.06)] transition-colors dark:border-[#243142] dark:bg-[#111827]/88 dark:shadow-[0_18px_50px_rgba(0,0,0,0.28)]">
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-[24px] border border-[#e7eef6] bg-[rgba(255,255,255,0.94)] shadow-[0_18px_50px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:shadow-[0_22px_56px_rgba(15,23,42,0.1)] dark:border-[#243142] dark:bg-[#111827]/88 dark:shadow-[0_18px_50px_rgba(0,0,0,0.28)] dark:hover:shadow-[0_22px_56px_rgba(0,0,0,0.38)]">
+      {onDetailsClick ? (
+        <button
+          aria-label={detailsLabel}
+          className="absolute inset-0 z-10 cursor-pointer"
+          onClick={onDetailsClick}
+          type="button"
+        />
+      ) : detailsUrl ? (
+        <Link
+          aria-label={detailsLabel}
+          className="absolute inset-0 z-10"
+          href={detailsUrl}
+        />
+      ) : null}
       <div className="relative h-[214px] w-full bg-[#f3f4f6] dark:bg-[#172033]">
         <Image
           fill
@@ -60,7 +81,7 @@ export function ProjectCard({
         <p className="mb-5 text-[0.95rem] leading-[1.75] text-[#6b7280] transition-colors dark:text-[#cbd5e1]">
           {description}
         </p>
-        <div className="mt-auto flex flex-wrap gap-[10px]">
+        <div className="relative z-20 mt-auto flex flex-wrap gap-[10px]">
           <a
             className="inline-flex min-w-24 items-center justify-center rounded-xl border border-[#111827] bg-[#111827] px-4 py-[10px] font-semibold text-white transition hover:border-[#2563eb] hover:bg-[#2563eb]"
             href={liveUrl}

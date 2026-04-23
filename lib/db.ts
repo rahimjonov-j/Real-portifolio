@@ -5,6 +5,8 @@ export type ProjectRow = {
   title: string;
   description_uz: string;
   description_en: string;
+  details_uz: string | null;
+  details_en: string | null;
   image_src: string;
   live_url: string | null;
   github_url: string | null;
@@ -18,6 +20,8 @@ export type ProjectInput = {
   title: string;
   description_uz: string;
   description_en: string;
+  details_uz: string;
+  details_en: string;
   image_src: string;
   live_url?: string | null;
   github_url?: string | null;
@@ -37,6 +41,8 @@ export async function createProjectsTable() {
       title TEXT NOT NULL,
       description_uz TEXT NOT NULL,
       description_en TEXT NOT NULL,
+      details_uz TEXT NOT NULL DEFAULT '',
+      details_en TEXT NOT NULL DEFAULT '',
       image_src TEXT NOT NULL,
       live_url TEXT,
       github_url TEXT,
@@ -45,6 +51,12 @@ export async function createProjectsTable() {
       priority BOOLEAN DEFAULT FALSE,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
+  `;
+
+  await sql`
+    ALTER TABLE projects
+    ADD COLUMN IF NOT EXISTS details_uz TEXT NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS details_en TEXT NOT NULL DEFAULT '';
   `;
 }
 
@@ -58,11 +70,24 @@ export async function getProjects() {
   return rows;
 }
 
+export async function getProjectById(id: number) {
+  const { rows } = await sql<ProjectRow>`
+    SELECT *
+    FROM projects
+    WHERE id = ${id}
+    LIMIT 1
+  `;
+
+  return rows[0] ?? null;
+}
+
 export async function addProject(project: ProjectInput) {
   const {
     title,
     description_uz,
     description_en,
+    details_uz,
+    details_en,
     image_src,
     live_url = null,
     github_url = null,
@@ -77,6 +102,8 @@ export async function addProject(project: ProjectInput) {
       title,
       description_uz,
       description_en,
+      details_uz,
+      details_en,
       image_src,
       live_url,
       github_url,
@@ -87,6 +114,8 @@ export async function addProject(project: ProjectInput) {
       ${title},
       ${description_uz},
       ${description_en},
+      ${details_uz},
+      ${details_en},
       ${image_src},
       ${live_url},
       ${github_url},

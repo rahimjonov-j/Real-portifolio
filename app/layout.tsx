@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { ThemeToggle } from "@/components/theme-toggle";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -8,7 +9,8 @@ export const metadata: Metadata = {
     default: "Javohir Rahimjonov's blog",
     template: "%s | Javohirdev.uz"
   },
-  description: "Bu sayt men haqimda qisqacha tasvirlab beradi.",
+  description:
+    "Mahsulotni ishlatishni osonlashtiradigan tez va puxta web interfeyslar yarataman.",
   keywords: [
     "Javohir Rahimjonov",
     "Javohirdev",
@@ -31,13 +33,14 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Javohirdev.uz",
     title: "Javohir Rahimjonov's blog",
-    description: "Bu sayt men haqimda qisqacha tasvirlab beradi.",
+    description:
+      "Mahsulotni ishlatishni osonlashtiradigan tez va puxta web interfeyslar yarataman.",
     url: "https://javohirdev.uz",
     images: [
       {
-        url: "/img/optimized/me-320.jpg",
-        width: 320,
-        height: 320,
+        url: "/img/optimized/newpic.png",
+        width: 1254,
+        height: 1254,
         alt: "Javohir Rahimjonov"
       }
     ]
@@ -45,8 +48,9 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary",
     title: "Javohir Rahimjonov's blog",
-    description: "Bu sayt men haqimda qisqacha tasvirlab beradi.",
-    images: ["/img/optimized/me-320.jpg"]
+    description:
+      "Mahsulotni ishlatishni osonlashtiradigan tez va puxta web interfeyslar yarataman.",
+    images: ["/img/optimized/newpic.png"]
   }
 };
 
@@ -62,8 +66,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="uz">
-      <body>{children}</body>
+    <html lang="uz" suppressHydrationWarning>
+      <body>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',d)}catch(e){}"
+          }}
+        />
+        {children}
+        <ThemeToggle />
+      </body>
     </html>
   );
 }

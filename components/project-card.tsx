@@ -30,8 +30,8 @@ export function ProjectCard({
   techStack
 }: ProjectCardProps) {
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-[24px] border border-[#e7eef6] bg-[rgba(255,255,255,0.94)] shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
-      <div className="relative h-[214px] w-full bg-[#f3f4f6]">
+    <article className="flex h-full flex-col overflow-hidden rounded-[24px] border border-[#e7eef6] bg-[rgba(255,255,255,0.94)] shadow-[0_18px_50px_rgba(15,23,42,0.06)] transition-colors dark:border-[#243142] dark:bg-[#111827]/88 dark:shadow-[0_18px_50px_rgba(0,0,0,0.28)]">
+      <div className="relative h-[214px] w-full bg-[#f3f4f6] dark:bg-[#172033]">
         <Image
           fill
           alt={imageAlt}
@@ -44,20 +44,20 @@ export function ProjectCard({
         />
       </div>
       <div className="flex flex-1 flex-col p-[22px]">
-        <h2 className="mb-[2px] text-[1.35rem] leading-[1.3] font-bold tracking-[-0.03em] text-[#111827]">
+        <h2 className="mb-[2px] text-[1.35rem] leading-[1.3] font-bold tracking-[-0.03em] text-[#111827] transition-colors dark:text-white">
           {title}
         </h2>
         <div aria-label={techLabel} className="my-[14px] flex flex-wrap gap-2">
           {techStack.map((tech) => (
             <span
               key={tech}
-              className="inline-flex items-center rounded-full border border-[#d6e6ff] bg-[#f8fbff] px-3 py-2 text-[0.82rem] font-semibold text-[#1d4ed8]"
+              className="inline-flex items-center rounded-full border border-[#d6e6ff] bg-[#f8fbff] px-3 py-2 text-[0.82rem] font-semibold text-[#1d4ed8] transition-colors dark:border-[#1d4ed8]/40 dark:bg-[#0f172a] dark:text-[#93c5fd]"
             >
               {tech}
             </span>
           ))}
         </div>
-        <p className="mb-5 text-[0.95rem] leading-[1.75] text-[#6b7280]">
+        <p className="mb-5 text-[0.95rem] leading-[1.75] text-[#6b7280] transition-colors dark:text-[#cbd5e1]">
           {description}
         </p>
         <div className="mt-auto flex flex-wrap gap-[10px]">
@@ -70,7 +70,7 @@ export function ProjectCard({
             {liveLabel}
           </a>
           <a
-            className="inline-flex min-w-24 items-center justify-center rounded-xl border border-[#dbe2ea] bg-white px-4 py-[10px] font-semibold text-[#111827] transition hover:border-[#bfdbfe] hover:bg-[#eff6ff] hover:text-[#2563eb]"
+            className="inline-flex min-w-24 items-center justify-center rounded-xl border border-[#dbe2ea] bg-white px-4 py-[10px] font-semibold text-[#111827] transition hover:border-[#bfdbfe] hover:bg-[#eff6ff] hover:text-[#2563eb] dark:border-[#243142] dark:bg-[#0f172a] dark:text-white dark:hover:border-[#3b82f6] dark:hover:bg-[#172033] dark:hover:text-[#93c5fd]"
             href={githubUrl}
             rel="noreferrer"
             target="_blank"

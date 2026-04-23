@@ -88,7 +88,8 @@ const dictionaries: Record<Locale, Dictionary> = {
       homeTitle: "Javohir Rahimjonov's blog",
       aboutTitle: "Axiycoder haqida",
       projectsTitle: "Projects",
-      description: "Bu sayt men haqimda qisqacha tasvirlab beradi."
+      description:
+        "Mahsulotni ishlatishni osonlashtiradigan tez va puxta web interfeyslar yarataman."
     },
     navigation: {
       projects: "Projects",
@@ -102,7 +103,8 @@ const dictionaries: Record<Locale, Dictionary> = {
     home: {
       role: "Frontend Dasturchisi",
       imageAlt: "Javohir Rahimjonov rasmi",
-      bio: "Bu sayt men haqimda qisqacha tasvirlab beradi.",
+      bio:
+        "Mahsulotni ishlatishni osonlashtiradigan tez va puxta web interfeyslar yarataman.",
       aboutButton: "Men haqimda",
       footer: "Javohirdev.uz"
     },
@@ -146,7 +148,8 @@ const dictionaries: Record<Locale, Dictionary> = {
       homeTitle: "Javohir Rahimjonov's blog",
       aboutTitle: "About Axiycoder",
       projectsTitle: "Projects",
-      description: "This site gives a brief overview of me."
+      description:
+        "I build fast, polished web interfaces that make products easier to use."
     },
     navigation: {
       projects: "Projects",
@@ -160,7 +163,8 @@ const dictionaries: Record<Locale, Dictionary> = {
     home: {
       role: "Frontend Developer",
       imageAlt: "Photo of Javohir Rahimjonov",
-      bio: "This site gives a brief overview of me.",
+      bio:
+        "I build fast, polished web interfaces that make products easier to use.",
       aboutButton: "About Me",
       footer: "Javohirdev.uz"
     },

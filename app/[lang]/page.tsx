@@ -70,9 +70,9 @@ export default async function HomePage({ params }: HomePageProps) {
   const dictionary = getDictionary(locale);
 
   return (
-    <div className="flex min-h-screen justify-center bg-white text-[#333333]">
+    <div className="flex min-h-screen justify-center bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.08),transparent_34%),#ffffff] text-[#333333] transition-colors dark:bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.14),transparent_34%),#090d14] dark:text-[#e5e7eb]">
       <PageAnimation>
-        <div className="flex w-full max-w-[900px] flex-col px-6 sm:px-8 py-6 sm:py-8">
+        <div className="mx-auto flex min-h-screen w-full max-w-[960px] flex-col px-5 py-5 sm:px-8 sm:py-8">
           <SiteHeader
             currentLocale={locale}
             homeAriaLabel={dictionary.navigation.homeAriaLabel}
@@ -81,57 +81,58 @@ export default async function HomePage({ params }: HomePageProps) {
             projectsLabel={dictionary.navigation.projects}
           />
 
-          <main className="flex-1">
-            <section className="mb-10 flex items-center gap-8 sm:gap-10 flex-col sm:flex-row text-center sm:text-left">
-              <div className="shrink-0">
-                <div className="relative h-32 w-32 sm:h-40 sm:w-40 overflow-hidden rounded-full border-4 border-white shadow-[0_18px_40px_rgba(15,23,42,0.14)] mx-auto">
-                  <Image
-                    alt={dictionary.home.imageAlt}
-                    fill
-                    priority
-                    sizes="(max-width: 640px) 128px, 160px"
-                    src="/img/optimized/me-320.webp"
-                    unoptimized
-                    style={{ objectFit: "cover", objectPosition: "center 26%" }}
-                  />
+          <main className="flex flex-1 items-center">
+            <div className="w-full px-5 py-8 sm:px-8 sm:py-10 md:px-10">
+              <section className="mb-8 flex flex-col items-center gap-7 text-center sm:mb-10 md:flex-row md:items-center md:gap-10 md:text-left">
+                <div className="shrink-0">
+                  <div className="relative mx-auto h-32 w-32 overflow-hidden rounded-full border-4 border-white shadow-[0_18px_40px_rgba(15,23,42,0.14)] transition-colors dark:border-[#1f2937] dark:shadow-[0_18px_40px_rgba(0,0,0,0.36)] sm:h-40 sm:w-40">
+                    <Image
+                      alt={dictionary.home.imageAlt}
+                      fill
+                      priority
+                      sizes="(max-width: 640px) 128px, 160px"
+                      src="/img/optimized/newpic.png"
+                      style={{ objectFit: "cover", objectPosition: "center 26%" }}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div>
-                <h1 className="mb-2 text-3xl sm:text-4xl md:text-5xl font-bold text-[#1a1a1a] tracking-tight">
-                  Javohir Rahimjonov
-                </h1>
-                <h2 className="mb-5 text-xl sm:text-2xl md:text-[1.8rem] font-normal text-[#737373]">
-                  {dictionary.home.role}
-                </h2>
-                <div className="flex gap-5 justify-center sm:justify-start">
-                  {socialLinks.map(({ href, label, icon: Icon }) => (
-                    <a
-                      key={label}
-                      aria-label={label}
-                      className="inline-flex items-center justify-center text-[#1a1a1a] transition hover:-translate-y-[3px] hover:text-[#007bff]"
-                      href={href}
-                      rel="noreferrer"
-                      target="_blank"
-                    >
-                      <Icon className="size-7" />
-                    </a>
-                  ))}
+                <div>
+                  <h1 className="mb-2 text-[clamp(2.15rem,10vw,3.2rem)] font-bold leading-[0.98] tracking-[-0.055em] text-[#151515] transition-colors dark:text-white">
+                    Javohir Rahimjonov
+                  </h1>
+                  <h2 className="mb-5 text-xl font-normal text-[#737373] transition-colors dark:text-[#aab4c3] sm:text-2xl md:text-[1.8rem]">
+                    {dictionary.home.role}
+                  </h2>
+                  <div className="flex justify-center gap-5 md:justify-start">
+                    {socialLinks.map(({ href, label, icon: Icon }) => (
+                      <a
+                        key={label}
+                        aria-label={label}
+                        className="inline-flex items-center justify-center text-[#1a1a1a] transition hover:-translate-y-[3px] hover:text-[#007bff] dark:text-[#e5e7eb] dark:hover:text-[#60a5fa]"
+                        href={href}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <Icon className="size-7" />
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
-            <section className="mb-10 text-[1.2rem] leading-[1.6] text-[#4a4a4a]">
-              <p>{dictionary.home.bio}</p>
-            </section>
+              <section className="mx-auto mb-8 max-w-[720px] text-center text-[1.1rem] leading-[1.7] text-[#4a4a4a] transition-colors dark:text-[#cbd5e1] sm:text-[1.2rem] md:mx-0 md:text-left">
+                <p>{dictionary.home.bio}</p>
+              </section>
 
-            <section className="mb-16">
-              <Link
-                className="inline-block rounded border border-[#007bff] bg-transparent px-6 py-2.5 text-base font-medium text-[#007bff] transition hover:bg-[#e6f2ff]"
-                href={getLocalizedPath(locale, "about")}
-              >
-                {dictionary.home.aboutButton}
-              </Link>
-            </section>
+              <section className="text-center md:text-left">
+                <Link
+                  className="inline-flex w-full items-center justify-center rounded-full border border-[#007bff] bg-[#007bff] px-6 py-3 text-base font-semibold text-white shadow-[0_14px_30px_rgba(0,123,255,0.18)] transition hover:-translate-y-px hover:bg-[#006ee6] sm:w-auto"
+                  href={getLocalizedPath(locale, "about")}
+                >
+                  {dictionary.home.aboutButton}
+                </Link>
+              </section>
+            </div>
           </main>
 
           <SiteFooter />

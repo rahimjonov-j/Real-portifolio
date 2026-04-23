@@ -18,28 +18,28 @@ export function SiteHeader({
   projectsLabel
 }: SiteHeaderProps) {
   return (
-    <header className="flex flex-col sm:flex-row items-center justify-between gap-6 py-6 sm:py-8 pb-10 sm:pb-16">
+    <header className="flex flex-wrap items-center justify-between gap-4 py-5 sm:py-8 pb-8 sm:pb-14">
       <Link
         aria-label={homeAriaLabel}
-        className="inline-block text-2xl font-bold text-[#1a1a1a] no-underline transition hover:opacity-80"
+        className="inline-block text-[1.35rem] font-bold text-[#1a1a1a] no-underline transition hover:opacity-80 dark:text-white sm:text-2xl"
         href={getLocalizedPath(currentLocale)}
       >
         Javohir dev
       </Link>
-      <div className="flex items-center gap-4 sm:gap-6 w-full sm:w-auto justify-center sm:justify-end">
-        <nav>
-          <Link
-            className="text-[0.95rem] sm:text-[1.02rem] font-medium text-[#666666] transition hover:text-black"
-            href={getLocalizedPath(currentLocale, "projects")}
-          >
-            {projectsLabel}
-          </Link>
-        </nav>
+      <div className="flex items-center gap-3 sm:gap-6">
         <LanguageSelect
           currentLocale={currentLocale}
           label={languageLabel}
           options={languages}
         />
+        <nav>
+          <Link
+            className="inline-flex rounded-full px-2 py-1 text-[0.95rem] font-medium text-[#666666] transition hover:bg-[#f4f7fb] hover:text-black dark:text-[#cbd5e1] dark:hover:bg-[#172033] dark:hover:text-white sm:text-[1.02rem]"
+            href={getLocalizedPath(currentLocale, "projects")}
+          >
+            {projectsLabel}
+          </Link>
+        </nav>
       </div>
     </header>
   );

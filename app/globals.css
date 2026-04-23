@@ -1,12 +1,25 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #333333;
 }
 
+.dark {
+  --background: #090d14;
+  --foreground: #e5e7eb;
+  color-scheme: dark;
+}
+
 html {
   scroll-behavior: smooth;
+}
+
+.theme-changing,
+.theme-changing * {
+  transition: none !important;
 }
 
 body {

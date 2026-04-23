@@ -51,9 +51,9 @@ export default async function AboutPage({ params }: AboutPageProps) {
   const dictionary = getDictionary(locale);
 
   return (
-    <div className="flex min-h-screen justify-center bg-white px-5 sm:px-6 py-4 sm:py-6 text-[#1f2937]">
+    <div className="flex min-h-screen justify-center bg-white px-5 py-4 text-[#1f2937] transition-colors dark:bg-[#090d14] dark:text-[#e5e7eb] sm:px-6 sm:py-6">
       <PageAnimation>
-        <div className="flex w-full max-w-[900px] flex-col">
+        <div className="mx-auto flex w-full max-w-[900px] flex-col">
           <SiteHeader
             currentLocale={locale}
             homeAriaLabel={dictionary.navigation.homeAriaLabel}
@@ -64,15 +64,15 @@ export default async function AboutPage({ params }: AboutPageProps) {
 
           <main className="flex flex-1 items-center justify-center py-10">
             <div className="w-full max-w-[720px] text-center">
-              <h1 className="mb-6 text-[clamp(1.8rem,6vw,3rem)] font-bold text-[#111827] tracking-tight">
+              <h1 className="mb-6 text-[clamp(1.8rem,6vw,3rem)] font-bold tracking-tight text-[#111827] transition-colors dark:text-white">
                 {dictionary.about.heading}
               </h1>
-              <p className="text-[1.05rem] sm:text-[1.1rem] leading-[1.8] text-[#4b5563]">
+              <p className="text-[1.05rem] leading-[1.8] text-[#4b5563] transition-colors dark:text-[#cbd5e1] sm:text-[1.1rem]">
                 {dictionary.about.body}
               </p>
               <div className="mt-10 flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
                 <a
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[#dbe3ef] bg-[#f8fafc] px-6 py-3.5 font-medium text-[#111827] transition hover:-translate-y-px hover:border-[#bfd3ff] hover:bg-[#eef4ff] active:scale-95"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[#dbe3ef] bg-[#f8fafc] px-6 py-3.5 font-medium text-[#111827] transition hover:-translate-y-px hover:border-[#bfd3ff] hover:bg-[#eef4ff] active:scale-95 dark:border-[#243142] dark:bg-[#111827] dark:text-white dark:hover:border-[#3b82f6] dark:hover:bg-[#172033]"
                   href="https://t.me/rahimjonovv_19"
                   rel="noreferrer"
                   target="_blank"
@@ -81,7 +81,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
                   <span>{dictionary.about.telegram}</span>
                 </a>
                 <Link
-                  className="inline-flex items-center justify-center rounded-full border border-[#dbe3ef] bg-[#f8fafc] px-6 py-3.5 font-medium text-[#111827] transition hover:-translate-y-px hover:border-[#bfd3ff] hover:bg-[#eef4ff] active:scale-95"
+                  className="inline-flex items-center justify-center rounded-full border border-[#dbe3ef] bg-[#f8fafc] px-6 py-3.5 font-medium text-[#111827] transition hover:-translate-y-px hover:border-[#bfd3ff] hover:bg-[#eef4ff] active:scale-95 dark:border-[#243142] dark:bg-[#111827] dark:text-white dark:hover:border-[#3b82f6] dark:hover:bg-[#172033]"
                   href={getLocalizedPath(locale)}
                 >
                   {dictionary.about.backHome}

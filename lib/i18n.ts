@@ -28,6 +28,8 @@ type Dictionary = {
     imageAlt: string;
     bio: string;
     aboutButton: string;
+    resumeButton: string;
+    resumeHref: string;
     footer: string;
   };
   about: {
@@ -111,6 +113,8 @@ const dictionaries: Record<Locale, Dictionary> = {
       bio:
         "Mahsulotni ishlatishni osonlashtiradigan tez va puxta web interfeyslar yarataman.",
       aboutButton: "Men haqimda",
+      resumeButton: "Resume",
+      resumeHref: "/JavohirbekRahimjonovUz.pdf",
       footer: "Javohirdev.uz"
     },
     about: {
@@ -177,6 +181,8 @@ const dictionaries: Record<Locale, Dictionary> = {
       bio:
         "I build fast, polished web interfaces that make products easier to use.",
       aboutButton: "About Me",
+      resumeButton: "Resume",
+      resumeHref: "/JavohirbekRahimjonovEn.pdf",
       footer: "Javohirdev.uz"
     },
     about: {

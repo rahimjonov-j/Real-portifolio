@@ -124,13 +124,20 @@ export default async function HomePage({ params }: HomePageProps) {
                 <p>{dictionary.home.bio}</p>
               </section>
 
-              <section className="text-center md:text-left">
+              <section className="flex flex-col items-center gap-3 text-center sm:flex-row md:text-left">
                 <Link
                   className="inline-flex w-full items-center justify-center rounded-full border border-[#007bff] bg-[#007bff] px-6 py-3 text-base font-semibold text-white shadow-[0_14px_30px_rgba(0,123,255,0.18)] transition hover:-translate-y-px hover:bg-[#006ee6] sm:w-auto"
                   href={getLocalizedPath(locale, "about")}
                 >
                   {dictionary.home.aboutButton}
                 </Link>
+                <a
+                  className="inline-flex w-full items-center justify-center rounded-full border border-[#dbe4ef] bg-white/80 px-6 py-3 text-base font-semibold text-[#111827] shadow-[0_14px_30px_rgba(15,23,42,0.06)] transition hover:-translate-y-px hover:border-[#bfdbfe] hover:bg-[#eff6ff] hover:text-[#2563eb] dark:border-[#243142] dark:bg-[#111827]/80 dark:text-white dark:hover:border-[#3b82f6] dark:hover:bg-[#172033] dark:hover:text-[#93c5fd] sm:w-auto"
+                  download
+                  href={dictionary.home.resumeHref}
+                >
+                  {dictionary.home.resumeButton}
+                </a>
               </section>
             </div>
           </main>

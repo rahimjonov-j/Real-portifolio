@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import {
   addProject,
   createProjectsTable,
+  deleteProject,
   getProjects,
   hasDatabaseConnection,
   type ProjectInput
@@ -56,6 +57,11 @@ function assertAdmin(request: Request) {
   return null;
 }
 
+function revalidateProjectPages() {
+  revalidatePath("/uz/projects");
+  revalidatePath("/en/projects");
+}
+
 export async function GET() {
   if (!hasDatabaseConnection()) {
     return NextResponse.json([]);
@@ -106,14 +112,56 @@ export async function POST(request: Request) {
     await createProjectsTable();
     await addProject(project);
 
-    revalidatePath("/uz/projects");
-    revalidatePath("/en/projects");
+    revalidateProjectPages();
 
     return NextResponse.json({ message: "Project added successfully" });
   } catch (error) {
     console.error("Failed to add project:", error);
     return NextResponse.json(
       { error: "Loyiha saqlanmadi. Ma'lumotlarni tekshirib qayta urinib ko'ring." },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(request: Request) {
+  const authError = assertAdmin(request);
+
+  if (authError) {
+    return NextResponse.json(
+      { error: authError },
+      { status: authError === "Unauthorized" ? 401 : 500 }
+    );
+  }
+
+  if (!hasDatabaseConnection()) {
+    return NextResponse.json(
+      { error: "POSTGRES_URL env topilmadi." },
+      { status: 503 }
+    );
+  }
+
+  const id = Number(new URL(request.url).searchParams.get("id"));
+
+  if (!Number.isInteger(id) || id <= 0) {
+    return NextResponse.json({ error: "Project ID noto'g'ri." }, { status: 400 });
+  }
+
+  try {
+    await createProjectsTable();
+    const deletedCount = await deleteProject(id);
+
+    if (deletedCount === 0) {
+      return NextResponse.json({ error: "Project topilmadi." }, { status: 404 });
+    }
+
+    revalidateProjectPages();
+
+    return NextResponse.json({ message: "Project deleted successfully" });
+  } catch (error) {
+    console.error("Failed to delete project:", error);
+    return NextResponse.json(
+      { error: "Project o'chirilmadi. Qayta urinib ko'ring." },
       { status: 500 }
     );
   }

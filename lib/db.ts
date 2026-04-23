@@ -96,3 +96,12 @@ export async function addProject(project: ProjectInput) {
     )
   `;
 }
+
+export async function deleteProject(id: number) {
+  const result = await sql`
+    DELETE FROM projects
+    WHERE id = ${id}
+  `;
+
+  return result.rowCount ?? 0;
+}

@@ -94,7 +94,7 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
     }
   }
 
-  const allProjects = [...dynamicProjects, ...dictionary.projects.items];
+  const allProjects = [...dictionary.projects.items, ...dynamicProjects];
 
   return (
     <main className="min-h-screen bg-[linear-gradient(180deg,#f8fbff_0%,#ffffff_34%)] px-5 py-7 text-[#111827] transition-colors before:pointer-events-none before:fixed before:top-0 before:left-0 before:h-[320px] before:w-[320px] before:rounded-full before:bg-[radial-gradient(circle,rgba(37,99,235,0.08),transparent_70%)] dark:bg-[linear-gradient(180deg,#0f172a_0%,#090d14_34%)] dark:text-[#e5e7eb] dark:before:bg-[radial-gradient(circle,rgba(56,189,248,0.12),transparent_70%)]">

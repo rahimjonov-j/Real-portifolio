@@ -1,5 +1,6 @@
 "use client";
 
+import { useTransition } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { locales, type Locale } from "@/lib/i18n";
 
@@ -16,8 +17,11 @@ export function LanguageSelect({
 }: LanguageSelectProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   function handleChange(nextLocale: string) {
+    if (nextLocale === currentLocale) return;
+
     const segments = pathname.split("/").filter(Boolean);
 
     if (segments.length > 0 && locales.includes(segments[0] as Locale)) {
@@ -26,13 +30,17 @@ export function LanguageSelect({
       segments.unshift(nextLocale);
     }
 
-    router.push(`/${segments.join("/")}`);
+    startTransition(() => {
+      router.push(`/${segments.join("/")}`);
+    });
   }
 
   return (
     <div
       aria-label={label}
-      className="inline-flex items-center rounded-full border border-[#d9e2ee] bg-[#fbfdff] p-1 shadow-[0_4px_14px_rgba(15,23,42,0.04)]"
+      className={`inline-flex items-center rounded-full border border-[#d9e2ee] bg-[#fbfdff] p-1 shadow-[0_4px_14px_rgba(15,23,42,0.04)] transition-opacity ${
+        isPending ? "opacity-70" : "opacity-100"
+      }`}
       role="group"
     >
       {locales.map((locale) => {
@@ -46,7 +54,8 @@ export function LanguageSelect({
               isActive
                 ? "bg-[#111827] text-white"
                 : "text-[#64748b] hover:bg-white hover:text-[#111827]"
-            }`}
+            } ${isPending ? "cursor-not-allowed" : "cursor-pointer"}`}
+            disabled={isPending}
             onClick={() => handleChange(locale)}
             type="button"
           >

@@ -10,6 +10,7 @@ import {
   isLocale,
   type Locale
 } from "@/lib/i18n";
+import { getProjects, createProjectsTable } from "@/lib/db";
 
 type ProjectsPageProps = {
   params: Promise<{ lang: string }>;
@@ -54,6 +55,29 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
   const locale = (isLocale(lang) ? lang : "uz") as Locale;
   const dictionary = getDictionary(locale);
 
+  // Fetch dynamic projects directly from DB
+  let dynamicProjects: any[] = [];
+  try {
+    // Ensure table exists
+    await createProjectsTable();
+    const data = await getProjects();
+    dynamicProjects = data.map((p: any) => ({
+      title: p.title,
+      description: locale === "uz" ? p.description_uz : p.description_en,
+      imageSrc: p.image_src,
+      liveUrl: p.live_url || "#",
+      githubUrl: p.github_url || "#",
+      imageAlt: p.title,
+      imagePosition: p.image_position,
+      priority: p.priority,
+      techStack: p.tech_stack
+    }));
+  } catch (error) {
+    console.error("Failed to fetch projects from DB:", error);
+  }
+
+  const allProjects = [...dynamicProjects, ...dictionary.projects.items];
+
   return (
     <main className="min-h-screen bg-[linear-gradient(180deg,#f8fbff_0%,#ffffff_34%)] px-5 py-7 text-[#111827] before:pointer-events-none before:fixed before:top-0 before:left-0 before:h-[320px] before:w-[320px] before:rounded-full before:bg-[radial-gradient(circle,rgba(37,99,235,0.08),transparent_70%)]">
       <div className="relative mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-[1080px] flex-col">
@@ -65,13 +89,13 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
           projectsLabel={dictionary.navigation.projects}
         />
 
-        <div className="mb-7 flex items-start justify-between gap-5 border-b border-[#e5edf7] pb-5 max-[900px]:flex-col max-[900px]:items-stretch">
-          <h1 className="text-[clamp(2rem,4vw,2.8rem)] font-bold tracking-[-0.04em]">
+        <div className="mb-7 flex items-start justify-between gap-5 border-b border-[#e5edf7] pb-5 flex-col sm:flex-row sm:items-center">
+          <h1 className="text-[clamp(1.8rem,5vw,2.8rem)] font-bold tracking-[-0.04em]">
             {dictionary.projects.heading}
           </h1>
           <Link
             aria-label={dictionary.about.backHome}
-            className="inline-flex w-fit items-center gap-[10px] whitespace-nowrap rounded-[14px] border border-[#dbe4ef] bg-[rgba(255,255,255,0.92)] px-4 py-3 text-[0.95rem] font-semibold text-[#334155] shadow-[0_10px_24px_rgba(15,23,42,0.04)] transition hover:border-[#bfd5ff] hover:bg-[#eff6ff] hover:text-[#0f172a]"
+            className="inline-flex w-fit items-center gap-[10px] whitespace-nowrap rounded-[14px] border border-[#dbe4ef] bg-[rgba(255,255,255,0.92)] px-4 py-2.5 text-[0.9rem] sm:text-[0.95rem] font-semibold text-[#334155] shadow-[0_10px_24px_rgba(15,23,42,0.04)] transition hover:border-[#bfd5ff] hover:bg-[#eff6ff] hover:text-[#0f172a]"
             href={getLocalizedPath(locale)}
           >
             <ArrowLeftIcon className="size-[18px]" />
@@ -79,10 +103,10 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
           </Link>
         </div>
 
-        <section className="grid grid-cols-3 gap-[22px] max-[900px]:grid-cols-1">
-          {dictionary.projects.items.map((project) => (
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[22px]">
+          {allProjects.map((project, idx) => (
             <ProjectCard
-              key={project.title}
+              key={`${project.title}-${idx}`}
               {...project}
               githubLabel={dictionary.projects.github}
               liveLabel={dictionary.projects.live}

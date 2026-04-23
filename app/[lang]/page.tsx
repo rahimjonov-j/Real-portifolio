@@ -88,10 +88,12 @@ export default async function HomePage({ params }: HomePageProps) {
                   <div className="relative mx-auto h-32 w-32 overflow-hidden rounded-full border-4 border-white shadow-[0_18px_40px_rgba(15,23,42,0.14)] transition-colors dark:border-[#1f2937] dark:shadow-[0_18px_40px_rgba(0,0,0,0.36)] sm:h-40 sm:w-40">
                     <Image
                       alt={dictionary.home.imageAlt}
+                      className="pointer-events-none select-none"
+                      draggable={false}
                       fill
                       priority
                       sizes="(max-width: 640px) 128px, 160px"
-                      src="/img/optimized/newpic.png"
+                      src="/img/optimized/me-320.webp"
                       style={{ objectFit: "cover", objectPosition: "center 26%" }}
                     />
                   </div>

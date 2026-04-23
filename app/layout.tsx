@@ -38,9 +38,9 @@ export const metadata: Metadata = {
     url: "https://javohirdev.uz",
     images: [
       {
-        url: "/img/optimized/newpic.png",
-        width: 1254,
-        height: 1254,
+        url: "/img/optimized/me-320.webp",
+        width: 320,
+        height: 320,
         alt: "Javohir Rahimjonov"
       }
     ]
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     title: "Javohir Rahimjonov's blog",
     description:
       "Mahsulotni ishlatishni osonlashtiradigan tez va puxta web interfeyslar yarataman.",
-    images: ["/img/optimized/newpic.png"]
+    images: ["/img/optimized/me-320.webp"]
   }
 };
 

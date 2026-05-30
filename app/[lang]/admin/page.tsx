@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
-import Image from "next/image";
+import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 
 type ProjectForm = {
@@ -56,9 +55,6 @@ export default function AdminPage() {
   const [listLoading, setListLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [project, setProject] = useState<ProjectForm>(emptyProject);
-  const [imagePreview, setImagePreview] = useState<string>("");
-  const [uploading, setUploading] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   async function loadProjects() {
     setListLoading(true);
@@ -81,42 +77,6 @@ export default function AdminPage() {
 
     return () => window.clearTimeout(timer);
   }, []);
-
-  async function handleImageUpload(file: File) {
-    if (!secret) {
-      setIsError(true);
-      setMessage("Avval Admin secret kiriting.");
-      return;
-    }
-    setUploading(true);
-    setMessage("");
-    setIsError(false);
-    const preview = URL.createObjectURL(file);
-    setImagePreview(preview);
-    try {
-      const form = new FormData();
-      form.append("file", file);
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${secret}` },
-        body: form
-      });
-      const data = (await res.json()) as { url?: string; error?: string };
-      if (!res.ok) {
-        setIsError(true);
-        setMessage(data.error ?? "Rasm yuklanmadi.");
-        setImagePreview("");
-        return;
-      }
-      updateProject("image_src", data.url ?? "");
-    } catch (err) {
-      setIsError(true);
-      setMessage(err instanceof Error ? err.message : "Rasm yuklanmadi.");
-      setImagePreview("");
-    } finally {
-      setUploading(false);
-    }
-  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -147,8 +107,6 @@ export default function AdminPage() {
 
       setMessage("Loyiha saqlandi. Projects sahifasi yangilandi.");
       setProject(emptyProject);
-      setImagePreview("");
-      if (fileInputRef.current) fileInputRef.current.value = "";
       await loadProjects();
     } catch (error) {
       setIsError(true);
@@ -262,44 +220,18 @@ export default function AdminPage() {
               />
             </label>
 
-            <div className="block">
+            <label className="block">
               <span className="text-sm font-semibold text-[#334155] dark:text-[#cbd5e1]">
-                Rasm
+                Rasm URL
               </span>
-              <label className="mt-2 flex w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#dbe4ef] bg-white px-4 py-4 text-center transition hover:border-[#2563eb] hover:bg-[#eff6ff] dark:border-[#243142] dark:bg-[#0f172a] dark:hover:border-[#3b82f6] dark:hover:bg-[#172033]">
-                {imagePreview ? (
-                  <Image
-                    alt="preview"
-                    className="mb-2 max-h-28 w-full rounded-xl object-cover"
-                    height={112}
-                    src={imagePreview}
-                    width={300}
-                  />
-                ) : null}
-                <span className="text-sm font-semibold text-[#2563eb] dark:text-[#93c5fd]">
-                  {uploading ? "Yuklanmoqda..." : imagePreview ? "Boshqa rasm tanlash" : "Fayl tanlash"}
-                </span>
-                <span className="mt-1 text-xs text-[#64748b] dark:text-[#64748b]">
-                  JPG, PNG, WebP, GIF, SVG — max 5 MB
-                </span>
-                <input
-                  accept="image/*"
-                  className="sr-only"
-                  disabled={uploading}
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) void handleImageUpload(file);
-                  }}
-                  ref={fileInputRef}
-                  type="file"
-                />
-              </label>
-              {project.image_src ? (
-                <p className="mt-1 truncate text-xs text-[#64748b] dark:text-[#64748b]">
-                  {project.image_src}
-                </p>
-              ) : null}
-            </div>
+              <input
+                className="mt-2 w-full rounded-2xl border border-[#dbe4ef] bg-white px-4 py-3 text-[#111827] outline-none transition focus:border-[#2563eb] dark:border-[#243142] dark:bg-[#0f172a] dark:text-white"
+                onChange={(event) => updateProject("image_src", event.target.value)}
+                placeholder="/img/optimized/rasm.webp"
+                required
+                value={project.image_src}
+              />
+            </label>
           </div>
 
           <label className="block">

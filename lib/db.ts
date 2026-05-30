@@ -126,6 +126,41 @@ export async function addProject(project: ProjectInput) {
   `;
 }
 
+export async function updateProject(id: number, project: ProjectInput) {
+  const {
+    title,
+    description_uz,
+    description_en,
+    details_uz,
+    details_en,
+    image_src,
+    live_url = null,
+    github_url = null,
+    tech_stack,
+    image_position = "center",
+    priority = false
+  } = project;
+  const techStackValue = tech_stack.join(",");
+
+  const result = await sql`
+    UPDATE projects SET
+      title = ${title},
+      description_uz = ${description_uz},
+      description_en = ${description_en},
+      details_uz = ${details_uz},
+      details_en = ${details_en},
+      image_src = ${image_src},
+      live_url = ${live_url},
+      github_url = ${github_url},
+      tech_stack = string_to_array(${techStackValue}, ','),
+      image_position = ${image_position},
+      priority = ${priority}
+    WHERE id = ${id}
+  `;
+
+  return result.rowCount ?? 0;
+}
+
 export async function deleteProject(id: number) {
   const result = await sql`
     DELETE FROM projects

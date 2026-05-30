@@ -21,8 +21,15 @@ type SavedProject = {
   id: number;
   title: string;
   description_uz: string;
+  description_en: string;
+  details_uz: string | null;
+  details_en: string | null;
   image_src: string;
+  live_url: string | null;
+  github_url: string | null;
   tech_stack: string[];
+  image_position: string | null;
+  priority: boolean | null;
 };
 
 const emptyProject: ProjectForm = {
@@ -54,6 +61,7 @@ export default function AdminPage() {
   const [savedProjects, setSavedProjects] = useState<SavedProject[]>([]);
   const [listLoading, setListLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<number | null>(null);
   const [project, setProject] = useState<ProjectForm>(emptyProject);
 
   async function loadProjects() {
@@ -85,8 +93,11 @@ export default function AdminPage() {
     setIsError(false);
 
     try {
-      const response = await fetch("/api/projects", {
-        method: "POST",
+      const url = editingId ? `/api/projects?id=${editingId}` : "/api/projects";
+      const method = editingId ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${secret}`
@@ -101,12 +112,13 @@ export default function AdminPage() {
 
       if (!response.ok) {
         setIsError(true);
-        setMessage(data.error || "Loyiha saqlanmadi.");
+        setMessage(data.error || (editingId ? "Loyiha yangilanmadi." : "Loyiha saqlanmadi."));
         return;
       }
 
-      setMessage("Loyiha saqlandi. Projects sahifasi yangilandi.");
+      setMessage(editingId ? "Loyiha yangilandi. Projects sahifasi yangilandi." : "Loyiha saqlandi. Projects sahifasi yangilandi.");
       setProject(emptyProject);
+      setEditingId(null);
       await loadProjects();
     } catch (error) {
       setIsError(true);
@@ -118,6 +130,31 @@ export default function AdminPage() {
     } finally {
       setLoading(false);
     }
+  }
+
+  function handleEdit(item: SavedProject) {
+    setEditingId(item.id);
+    setProject({
+      title: item.title,
+      description_uz: item.description_uz,
+      description_en: item.description_en,
+      details_uz: item.details_uz ?? "",
+      details_en: item.details_en ?? "",
+      image_src: item.image_src,
+      live_url: item.live_url ?? "",
+      github_url: item.github_url ?? "",
+      tech_stack: item.tech_stack.join(", "),
+      image_position: item.image_position ?? "center",
+      priority: item.priority ?? false
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function handleCancelEdit() {
+    setEditingId(null);
+    setProject(emptyProject);
+    setMessage("");
+    setIsError(false);
   }
 
   function updateProject<Key extends keyof ProjectForm>(
@@ -174,7 +211,7 @@ export default function AdminPage() {
               Admin
             </p>
             <h1 className="text-[clamp(2rem,6vw,3.2rem)] font-bold tracking-[-0.05em]">
-              Yangi loyiha yaratish
+              {editingId ? "Loyihani tahrirlash" : "Yangi loyiha yaratish"}
             </h1>
           </div>
           <Link
@@ -364,13 +401,26 @@ export default function AdminPage() {
             Priority qilib yuqoriga chiqarish
           </label>
 
-          <button
-            className="inline-flex w-full items-center justify-center rounded-full bg-[#007bff] px-6 py-3.5 font-bold text-white shadow-[0_14px_30px_rgba(0,123,255,0.18)] transition hover:-translate-y-px hover:bg-[#006ee6] disabled:cursor-not-allowed disabled:opacity-60"
-            disabled={loading}
-            type="submit"
-          >
-            {loading ? "Saqlanmoqda..." : "Loyihani saqlash"}
-          </button>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <button
+              className="inline-flex flex-1 items-center justify-center rounded-full bg-[#007bff] px-6 py-3.5 font-bold text-white shadow-[0_14px_30px_rgba(0,123,255,0.18)] transition hover:-translate-y-px hover:bg-[#006ee6] disabled:cursor-not-allowed disabled:opacity-60"
+              disabled={loading}
+              type="submit"
+            >
+              {loading
+                ? editingId ? "Yangilanmoqda..." : "Saqlanmoqda..."
+                : editingId ? "Loyihani yangilash" : "Loyihani saqlash"}
+            </button>
+            {editingId ? (
+              <button
+                className="inline-flex items-center justify-center rounded-full border border-[#dbe4ef] px-6 py-3.5 font-bold text-[#334155] transition hover:bg-[#f8fafc] dark:border-[#243142] dark:text-[#cbd5e1] dark:hover:bg-[#0f172a]"
+                onClick={handleCancelEdit}
+                type="button"
+              >
+                Bekor qilish
+              </button>
+            ) : null}
+          </div>
 
           {message ? (
             <p
@@ -406,8 +456,8 @@ export default function AdminPage() {
 
           {!secret ? (
             <p className="rounded-2xl bg-amber-50 p-4 text-sm font-semibold text-amber-800 dark:bg-amber-950/35 dark:text-amber-200">
-              O&apos;chirish uchun avval yuqoridagi Admin secret maydoniga
-              parolni kiriting.
+              Tahrirlash va o&apos;chirish uchun avval yuqoridagi Admin secret
+              maydoniga parolni kiriting.
             </p>
           ) : null}
 
@@ -439,14 +489,24 @@ export default function AdminPage() {
                   </p>
                 </div>
 
-                <button
-                  className="inline-flex w-full items-center justify-center rounded-full bg-red-600 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
-                  disabled={!secret || deletingId === item.id}
-                  onClick={() => handleDelete(item.id, item.title)}
-                  type="button"
-                >
-                  {deletingId === item.id ? "O'chirilmoqda..." : "O'chirish"}
-                </button>
+                <div className="flex w-full gap-2 sm:w-auto">
+                  <button
+                    className="inline-flex flex-1 items-center justify-center rounded-full border border-[#dbe4ef] bg-white px-4 py-2.5 text-sm font-bold text-[#334155] transition hover:border-[#bfdbfe] hover:bg-[#eff6ff] disabled:cursor-not-allowed disabled:opacity-60 dark:border-[#243142] dark:bg-[#111827] dark:text-[#cbd5e1] dark:hover:border-[#3b82f6] dark:hover:bg-[#172033] sm:flex-none"
+                    disabled={editingId === item.id}
+                    onClick={() => handleEdit(item)}
+                    type="button"
+                  >
+                    Tahrirlash
+                  </button>
+                  <button
+                    className="inline-flex flex-1 items-center justify-center rounded-full bg-red-600 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60 sm:flex-none"
+                    disabled={!secret || deletingId === item.id}
+                    onClick={() => handleDelete(item.id, item.title)}
+                    type="button"
+                  >
+                    {deletingId === item.id ? "O'chirilmoqda..." : "O'chirish"}
+                  </button>
+                </div>
               </article>
             ))}
           </div>

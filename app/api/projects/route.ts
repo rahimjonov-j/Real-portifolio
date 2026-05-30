@@ -6,6 +6,7 @@ import {
   deleteProject,
   getProjects,
   hasDatabaseConnection,
+  updateProject,
   type ProjectInput
 } from "@/lib/db";
 
@@ -123,6 +124,57 @@ export async function POST(request: Request) {
     console.error("Failed to add project:", error);
     return NextResponse.json(
       { error: "Loyiha saqlanmadi. Ma'lumotlarni tekshirib qayta urinib ko'ring." },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(request: Request) {
+  const authError = assertAdmin(request);
+
+  if (authError) {
+    return NextResponse.json(
+      { error: authError },
+      { status: authError === "Unauthorized" ? 401 : 500 }
+    );
+  }
+
+  if (!hasDatabaseConnection()) {
+    return NextResponse.json(
+      { error: "POSTGRES_URL env topilmadi." },
+      { status: 503 }
+    );
+  }
+
+  const id = Number(new URL(request.url).searchParams.get("id"));
+
+  if (!Number.isInteger(id) || id <= 0) {
+    return NextResponse.json({ error: "Project ID noto'g'ri." }, { status: 400 });
+  }
+
+  try {
+    const body = (await request.json()) as Record<string, unknown>;
+    const project = normalizeProject(body);
+    const validationError = validateProject(project);
+
+    if (validationError) {
+      return NextResponse.json({ error: validationError }, { status: 400 });
+    }
+
+    await createProjectsTable();
+    const updatedCount = await updateProject(id, project);
+
+    if (updatedCount === 0) {
+      return NextResponse.json({ error: "Project topilmadi." }, { status: 404 });
+    }
+
+    revalidateProjectPages();
+
+    return NextResponse.json({ message: "Project updated successfully" });
+  } catch (error) {
+    console.error("Failed to update project:", error);
+    return NextResponse.json(
+      { error: "Project yangilanmadi. Qayta urinib ko'ring." },
       { status: 500 }
     );
   }

@@ -61,6 +61,16 @@ type Dictionary = {
 };
 
 const sharedProjects = {
+  prohome: {
+    slug: "prohome",
+    title: "ProHome",
+    imageSrc: "/img/optimized/prohome-960.webp",
+    liveUrl: "https://prohome.uz/",
+    githubUrl: "https://github.com/zamonagency/prohome-your-trusted-hub",
+    imagePosition: "center top",
+    priority: true,
+    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL"]
+  },
   jahonbozori: {
     slug: "jahon-bozori",
     title: "Jahon bozori",
@@ -83,9 +93,25 @@ const sharedProjects = {
     slug: "girgiton-ai",
     title: "Girgiton Ai",
     imageSrc: "/img/optimized/girgiton-960.webp",
-    liveUrl: "#",
+    liveUrl: "https://girgiton-ai.vercel.app/",
     githubUrl: "https://github.com/rahimjonov-j/Girgiton-ui",
     techStack: ["React JS", "Vite", "Tailwind CSS", "Lucide"]
+  },
+  moshn: {
+    slug: "moshn",
+    title: "Moshn",
+    imageSrc: "/img/optimized/moshn-960.webp",
+    liveUrl: "https://www.moshn.uz/",
+    githubUrl: "https://github.com/rahimjonov-j/temirxotinhackathon",
+    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL"]
+  },
+  teacherAssistant: {
+    slug: "teacher-assistant",
+    title: "Teacher Assistant",
+    imageSrc: "/img/optimized/teacher-assistant-960.webp",
+    liveUrl: "https://teacher-assistantt.vercel.app/",
+    githubUrl: "https://github.com/rahimjonov-j/Teacher-assistant",
+    techStack: ["React 19", "TypeScript", "Tailwind CSS", "Node.js", "Express"]
   }
 };
 
@@ -125,12 +151,20 @@ const dictionaries: Record<Locale, Dictionary> = {
       backHome: "Bosh sahifaga qaytish"
     },
     projects: {
-      heading: "Projects",
+      heading: "Loyihalar",
       back: "Orqaga",
       techLabel: "Texnologiyalar",
       live: "Live",
       github: "GitHub",
       items: [
+        {
+          ...sharedProjects.prohome,
+          description:
+            "Ko'chmas mulk bozori uchun qulay va zamonaviy veb-platforma.",
+          details:
+            "ProHome loyihasi ko'chmas mulk bozorida xonadon, uy va tijorat maydonlarini qidirib topishni osonlashtirish maqsadida ishlab chiqilgan. Toza interfeys, tez qidiruv va qulay filtrlash tizimi orqali foydalanuvchilar o'zlariga mos ob'ektni minimal vaqt ichida topadi.",
+          imageAlt: "ProHome loyiha rasmi"
+        },
         {
           ...sharedProjects.jahonbozori,
           description:
@@ -154,6 +188,22 @@ const dictionaries: Record<Locale, Dictionary> = {
           details:
             "Girgiton AI restoran va xizmat ko'rsatish jarayonlarida tezlikni oshirishga qaratilgan loyiha. Interfeys ofitsiantlar uchun buyurtma va xizmat jarayonini soddalashtirish, vaqtni tejash va xatolarni kamaytirish g'oyasi atrofida qurilgan. Dizaynda tez anglash, yirik bosiladigan elementlar va real ish jarayoniga mos foydalanish qulayligi muhim bo'lgan.",
           imageAlt: "Girgiton AI loyiha rasmi"
+        },
+        {
+          ...sharedProjects.moshn,
+          description:
+            "O'zbekiston bo'ylab mashina egalari va ustalar uchun VIN-asosida servis tarixini yurituvchi platforma.",
+          details:
+            "Moshn — avtomobillar servis tarixini VIN raqami orqali yuritish va kuzatish uchun mo'ljallangan platforma. Mashina egasi va usta o'rtasida shaffof aloqa o'rnatib, har bir texnik xizmatni hujjatlashtirishga yordam beradi. Loyiha O'zbekistondagi avtomobil xizmat ko'rsatish sohasini raqamlashtirish maqsadida hackathonda ishlab chiqilgan.",
+          imageAlt: "Moshn loyiha rasmi"
+        },
+        {
+          ...sharedProjects.teacherAssistant,
+          description:
+            "O'qituvchilar uchun AI yordamchisi — dars rejalari, testlar va o'quv materiallarini sun'iy intellekt yordamida tez yaratish platformasi.",
+          details:
+            "Teacher Assistant — o'qituvchilarning kundalik ish yukini kamaytirishga qaratilgan AI-platforma. Foydalanuvchi mavzu va sinf darajasini ko'rsatsa, tizim dars rejasi, topshiriqlar va testlarni avtomatik tayyorlaydi. React 19 va Node.js/Express asosida qurilgan, Tailwind CSS orqali qulay va toza interfeys yaratilgan.",
+          imageAlt: "Teacher Assistant loyiha rasmi"
         }
       ]
     }
@@ -200,6 +250,14 @@ const dictionaries: Record<Locale, Dictionary> = {
       github: "GitHub",
       items: [
         {
+          ...sharedProjects.prohome,
+          description:
+            "A modern real estate platform for browsing and discovering properties.",
+          details:
+            "ProHome was built to simplify property discovery in the real estate market. With a clean interface, fast search, and convenient filtering, users can find the right property with minimal effort.",
+          imageAlt: "ProHome project image"
+        },
+        {
           ...sharedProjects.jahonbozori,
           description:
             "A minimal and user-friendly sales platform for a major shopping center in Fergana.",
@@ -222,6 +280,22 @@ const dictionaries: Record<Locale, Dictionary> = {
           details:
             "Girgiton AI focuses on improving speed in restaurant and service workflows. The interface is shaped around helping waiters simplify orders and service steps, save time, and reduce mistakes. The design emphasizes quick understanding, large actionable controls, and usability that fits real operational work.",
           imageAlt: "Girgiton AI project image"
+        },
+        {
+          ...sharedProjects.moshn,
+          description:
+            "A platform for car owners and mechanics across Uzbekistan to track vehicle service history by VIN.",
+          details:
+            "Moshn is a platform designed to document and track vehicle service history using VIN numbers. It establishes transparent communication between car owners and mechanics, with each service visit fully recorded. The project was built during a hackathon with the goal of digitizing the auto-service industry in Uzbekistan.",
+          imageAlt: "Moshn project image"
+        },
+        {
+          ...sharedProjects.teacherAssistant,
+          description:
+            "An AI assistant for teachers — a platform to quickly generate lesson plans, assignments, and educational materials with the help of artificial intelligence.",
+          details:
+            "Teacher Assistant is an AI-powered platform built to reduce the daily workload of teachers. The user provides a topic and grade level, and the system automatically generates lesson plans, assignments, and tests. Built with React 19 and Node.js/Express on the backend, styled with Tailwind CSS for a clean and accessible interface.",
+          imageAlt: "Teacher Assistant project image"
         }
       ]
     }

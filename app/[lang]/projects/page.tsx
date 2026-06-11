@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowLeftIcon } from "@/components/icons";
-import {
-  ProjectsGallery,
-  type ProjectGalleryItem
-} from "@/components/projects-gallery";
+import { ProjectsList } from "@/components/projects-list";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import {
   getDictionary,
-  getLocalizedPath,
   isLocale,
   type Locale
 } from "@/lib/i18n";
@@ -19,10 +13,22 @@ import {
   hasDatabaseConnection,
   type ProjectRow
 } from "@/lib/db";
+import type { ProjectGalleryItem } from "@/components/projects-gallery";
 
 type ProjectsPageProps = {
   params: Promise<{ lang: string }>;
 };
+
+const PROJECT_META: Record<string, { accent: string; featured: boolean }> = {
+  prohome: { accent: "#10B981", featured: false },
+  "jahon-bozori": { accent: "#3B82F6", featured: false },
+  "kotiba-ai": { accent: "#8B5CF6", featured: false },
+  "girgiton-ai": { accent: "#F59E0B", featured: false },
+  moshn: { accent: "#EF4444", featured: false },
+  "teacher-assistant": { accent: "#0EA5E9", featured: false }
+};
+
+const DEFAULT_ACCENT = "#52525B";
 
 export async function generateMetadata({
   params
@@ -89,11 +95,36 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
     }
   }
 
-  const allProjects = [...dictionary.projects.items, ...dynamicProjects];
+  const staticTitles = new Set(
+    dictionary.projects.items.map((p) => p.title.toLowerCase())
+  );
+  const filteredDynamic = dynamicProjects.filter(
+    (p) => !staticTitles.has(p.title.toLowerCase())
+  );
+
+  const allProjects = [...dictionary.projects.items, ...filteredDynamic];
+
+  const listProjects = allProjects.map((p) => ({
+    slug: p.slug,
+    title: p.title,
+    description: p.description,
+    techStack: p.techStack,
+    liveUrl: p.liveUrl,
+    githubUrl: p.githubUrl,
+    accent: PROJECT_META[p.slug]?.accent ?? DEFAULT_ACCENT,
+    featured: PROJECT_META[p.slug]?.featured ?? false
+  }));
+
+  const headingWords = dictionary.projects.heading.split(" ");
+  const boldWord = headingWords.pop();
+  const lightWords = headingWords.join(" ");
+
+  const count = String(allProjects.length).padStart(2, "0");
+  const countLabel = locale === "uz" ? `${count} loyiha` : `${count} projects`;
 
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,#f8fbff_0%,#ffffff_34%)] px-5 py-7 text-[#111827] transition-colors before:pointer-events-none before:fixed before:top-0 before:left-0 before:h-[320px] before:w-[320px] before:rounded-full before:bg-[radial-gradient(circle,rgba(37,99,235,0.08),transparent_70%)] dark:bg-[linear-gradient(180deg,#0f172a_0%,#090d14_34%)] dark:text-[#e5e7eb] dark:before:bg-[radial-gradient(circle,rgba(56,189,248,0.12),transparent_70%)]">
-      <div className="relative mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-[1080px] flex-col">
+    <main className="min-h-screen bg-white px-5 py-7 text-[#18181B] transition-colors dark:bg-[#09090B] dark:text-[#FAFAFA] sm:px-10">
+      <div className="relative mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-[900px] flex-col">
         <SiteHeader
           currentLocale={locale}
           homeAriaLabel={dictionary.navigation.homeAriaLabel}
@@ -102,26 +133,19 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
           projectsLabel={dictionary.navigation.projects}
         />
 
-        <div className="mb-7 flex flex-col items-start justify-between gap-5 border-b border-[#e5edf7] pb-5 transition-colors dark:border-[#243142] sm:flex-row sm:items-center">
-          <h1 className="text-[clamp(1.8rem,5vw,2.8rem)] font-bold tracking-[-0.04em]">
-            {dictionary.projects.heading}
+        {/* Page header */}
+        <div className="mb-16 flex items-end justify-between border-b border-[#E4E4E7] pb-8 transition-colors dark:border-[#27272A]">
+          <h1 className="text-[36px] leading-none tracking-[-1px] text-[#18181B] dark:text-[#FAFAFA]">
+            {lightWords && (
+              <span className="font-light">{lightWords} </span>
+            )}
+            <span className="font-bold">{boldWord}</span>
           </h1>
-          <Link
-            aria-label={dictionary.about.backHome}
-            className="inline-flex w-fit items-center gap-[10px] whitespace-nowrap rounded-[14px] border border-[#dbe4ef] bg-[rgba(255,255,255,0.92)] px-4 py-2.5 text-[0.9rem] font-semibold text-[#334155] shadow-[0_10px_24px_rgba(15,23,42,0.04)] transition hover:border-[#bfd5ff] hover:bg-[#eff6ff] hover:text-[#0f172a] dark:border-[#243142] dark:bg-[#111827]/90 dark:text-[#cbd5e1] dark:hover:border-[#3b82f6] dark:hover:bg-[#172033] dark:hover:text-white sm:text-[0.95rem]"
-            href={getLocalizedPath(locale)}
-          >
-            <ArrowLeftIcon className="size-[18px]" />
-            <span>{dictionary.projects.back}</span>
-          </Link>
+          <p className="text-[14px] text-[#A1A1AA] dark:text-[#52525B]">{countLabel}</p>
         </div>
 
-        <ProjectsGallery
-          githubLabel={dictionary.projects.github}
-          liveLabel={dictionary.projects.live}
-          projects={allProjects}
-          techLabel={dictionary.projects.techLabel}
-        />
+        {/* Project list */}
+        <ProjectsList projects={listProjects} />
 
         <SiteFooter />
       </div>

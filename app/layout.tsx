@@ -1,6 +1,17 @@
 import type { Metadata, Viewport } from "next";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import { ThemeToggle } from "@/components/theme-toggle";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter"
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono"
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://javohirdev.uz"),
@@ -67,7 +78,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="uz" suppressHydrationWarning>
-      <body>
+      <body className={`${inter.variable} ${jetbrainsMono.variable}`}>
         <script
           dangerouslySetInnerHTML={{
             __html:

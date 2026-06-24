@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { BorderBeam } from "@/components/magicui/border-beam";
 
 type ProjectCardProps = {
   title: string;
@@ -38,6 +39,13 @@ export function ProjectCard({
 
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-[24px] border border-[#e7eef6] bg-[rgba(255,255,255,0.94)] shadow-[0_18px_50px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:shadow-[0_22px_56px_rgba(15,23,42,0.1)] dark:border-[#243142] dark:bg-[#111827]/88 dark:shadow-[0_18px_50px_rgba(0,0,0,0.28)] dark:hover:shadow-[0_22px_56px_rgba(0,0,0,0.38)]">
+      <BorderBeam
+        colorFrom="#3b82f6"
+        colorTo="#8b5cf6"
+        duration={6}
+        borderWidth={1.5}
+        className="opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+      />
       {onDetailsClick ? (
         <button
           aria-label={detailsLabel}

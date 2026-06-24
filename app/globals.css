@@ -2,6 +2,13 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Animatable CSS custom property for BorderBeam */
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
 @theme {
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
@@ -10,11 +17,13 @@
 :root {
   --background: #ffffff;
   --foreground: #333333;
+  --magic-gradient: rgba(219, 234, 254, 0.55);
 }
 
 .dark {
   --background: #090d14;
   --foreground: #e5e7eb;
+  --magic-gradient: rgba(30, 50, 90, 0.45);
   color-scheme: dark;
 }
 
@@ -42,6 +51,7 @@ body {
   color: var(--foreground);
 }
 
+/* ── Fade-in-up (PageAnimation) ─────────────────────────── */
 .fade-in-up {
   animation: fade-in-up 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   opacity: 0;
@@ -51,4 +61,90 @@ body {
   to {
     opacity: 1;
   }
+}
+
+/* ── BorderBeam: rotating conic gradient ─────────────────── */
+@keyframes border-beam {
+  to {
+    --border-angle: 360deg;
+  }
+}
+
+.animate-border-beam {
+  animation: border-beam 4s linear infinite;
+}
+
+/* ── Animated gradient text ──────────────────────────────── */
+@keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 4s ease infinite;
+}
+
+/* ── Meteors ─────────────────────────────────────────────── */
+@keyframes meteor {
+  0% {
+    transform: rotate(215deg) translateX(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(215deg) translateX(-600px);
+    opacity: 0;
+  }
+}
+
+.animate-meteor {
+  animation: meteor linear infinite;
+}
+
+/* ── ShimmerButton slide ─────────────────────────────────── */
+@keyframes shimmer-slide {
+  from {
+    transform: translateX(-150%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+
+.animate-shimmer-slide {
+  animation: shimmer-slide 3s ease-in-out infinite;
+}
+
+/* ── Marquee (horizontal scroll) ────────────────────────── */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap, 1rem)));
+  }
+}
+
+.animate-marquee {
+  animation: marquee var(--duration, 30s) linear infinite;
+}
+
+/* ── Avatar spinning ring ────────────────────────────────── */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 5s linear infinite;
 }

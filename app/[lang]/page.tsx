@@ -1,34 +1,14 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { GitHubIcon, LinkedInIcon, TelegramIcon } from "@/components/icons";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { PageAnimation } from "@/components/page-animation";
+import { HeroContent } from "@/components/hero-content";
 import {
   getDictionary,
   getLocalizedPath,
   isLocale,
   type Locale
 } from "@/lib/i18n";
-
-const socialLinks = [
-  {
-    href: "https://github.com/rahimjonov-j",
-    label: "GitHub",
-    icon: GitHubIcon
-  },
-  {
-    href: "https://www.linkedin.com/in/javohir-rahimjonov",
-    label: "LinkedIn",
-    icon: LinkedInIcon
-  },
-  {
-    href: "https://t.me/rahimjonovv_19",
-    label: "Telegram",
-    icon: TelegramIcon
-  }
-];
 
 type HomePageProps = {
   params: Promise<{ lang: string }>;
@@ -82,66 +62,15 @@ export default async function HomePage({ params }: HomePageProps) {
           />
 
           <main className="flex flex-1 items-center">
-            <div className="w-full px-5 py-8 sm:px-8 sm:py-10 md:px-10">
-              <section className="mb-8 flex flex-col items-center gap-7 text-center sm:mb-10 md:flex-row md:items-center md:gap-10 md:text-left">
-                <div className="shrink-0">
-                  <div className="relative mx-auto h-32 w-32 overflow-hidden rounded-full border-4 border-white shadow-[0_18px_40px_rgba(15,23,42,0.14)] transition-colors dark:border-[#1f2937] dark:shadow-[0_18px_40px_rgba(0,0,0,0.36)] sm:h-40 sm:w-40">
-                    <Image
-                      alt={dictionary.home.imageAlt}
-                      className="pointer-events-none select-none"
-                      draggable={false}
-                      fill
-                      priority
-                      sizes="(max-width: 640px) 128px, 160px"
-                      src="/img/optimized/me-320.webp"
-                      style={{ objectFit: "cover", objectPosition: "center 26%" }}
-                    />
-                  </div>
-                </div>
-                <div>
-                  <h1 className="mb-2 text-[clamp(2.15rem,10vw,3.2rem)] font-bold leading-[0.98] tracking-[-0.055em] text-[#151515] transition-colors dark:text-white">
-                    Javohir Rahimjonov
-                  </h1>
-                  <h2 className="mb-5 text-xl font-normal text-[#737373] transition-colors dark:text-[#aab4c3] sm:text-2xl md:text-[1.8rem]">
-                    {dictionary.home.role}
-                  </h2>
-                  <div className="flex justify-center gap-5 md:justify-start">
-                    {socialLinks.map(({ href, label, icon: Icon }) => (
-                      <a
-                        key={label}
-                        aria-label={label}
-                        className="inline-flex items-center justify-center text-[#1a1a1a] transition hover:-translate-y-[3px] hover:text-[#007bff] dark:text-[#e5e7eb] dark:hover:text-[#60a5fa]"
-                        href={href}
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        <Icon className="size-7" />
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </section>
-
-              <section className="mx-auto mb-8 max-w-[720px] text-center text-[1.1rem] leading-[1.7] text-[#4a4a4a] transition-colors dark:text-[#cbd5e1] sm:text-[1.2rem] md:mx-0 md:text-left">
-                <p>{dictionary.home.bio}</p>
-              </section>
-
-              <section className="flex flex-col items-center gap-3 text-center sm:flex-row md:text-left">
-                <Link
-                  className="inline-flex w-full items-center justify-center rounded-full border border-[#007bff] bg-[#007bff] px-6 py-3 text-base font-semibold text-white shadow-[0_14px_30px_rgba(0,123,255,0.18)] transition hover:-translate-y-px hover:bg-[#006ee6] sm:w-auto"
-                  href={getLocalizedPath(locale, "about")}
-                >
-                  {dictionary.home.aboutButton}
-                </Link>
-                <a
-                  className="inline-flex w-full items-center justify-center rounded-full border border-[#dbe4ef] bg-white/80 px-6 py-3 text-base font-semibold text-[#111827] shadow-[0_14px_30px_rgba(15,23,42,0.06)] transition hover:-translate-y-px hover:border-[#bfdbfe] hover:bg-[#eff6ff] hover:text-[#2563eb] dark:border-[#243142] dark:bg-[#111827]/80 dark:text-white dark:hover:border-[#3b82f6] dark:hover:bg-[#172033] dark:hover:text-[#93c5fd] sm:w-auto"
-                  download
-                  href={dictionary.home.resumeHref}
-                >
-                  {dictionary.home.resumeButton}
-                </a>
-              </section>
-            </div>
+            <HeroContent
+              role={dictionary.home.role}
+              bio={dictionary.home.bio}
+              imageAlt={dictionary.home.imageAlt}
+              aboutButton={dictionary.home.aboutButton}
+              resumeButton={dictionary.home.resumeButton}
+              resumeHref={dictionary.home.resumeHref}
+              aboutHref={getLocalizedPath(locale, "about")}
+            />
           </main>
 
           <SiteFooter />

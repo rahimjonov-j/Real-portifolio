@@ -63,9 +63,18 @@ export function ProjectsList({ projects }: ProjectsListProps) {
               className="rounded-2xl border border-[#E4E4E7] bg-white transition-colors hover:border-[#D4D4D8] dark:border-[#27272A] dark:bg-[#09090B] dark:hover:border-[#3F3F46]"
             >
               <article
-                className="group cursor-pointer px-6 py-6"
+                className="group relative cursor-pointer px-6 py-6"
                 style={{ "--accent": project.accent } as React.CSSProperties}
               >
+                {project.liveUrl !== "#" && (
+                  <a
+                    aria-label={`${project.title} live saytiga o'tish`}
+                    className="absolute inset-0 z-10"
+                    href={project.liveUrl}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  />
+                )}
                 {/* Mobile layout */}
                 <div className="flex flex-col gap-3 sm:hidden">
                   <div className="flex items-center gap-3">
@@ -97,7 +106,7 @@ export function ProjectsList({ projects }: ProjectsListProps) {
                       </span>
                     ))}
                   </div>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="relative z-20 flex flex-wrap gap-2">
                     {project.liveUrl !== "#" && (
                       <LiveLink accent={project.accent} href={project.liveUrl} />
                     )}
@@ -146,7 +155,7 @@ export function ProjectsList({ projects }: ProjectsListProps) {
                   </div>
 
                   {/* Actions */}
-                  <div className="flex flex-col gap-2 pt-1">
+                  <div className="relative z-20 flex flex-col gap-2 pt-1">
                     {project.liveUrl !== "#" && (
                       <LiveLink accent={project.accent} href={project.liveUrl} />
                     )}

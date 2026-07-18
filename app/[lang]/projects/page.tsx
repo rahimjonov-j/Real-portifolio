@@ -7,6 +7,7 @@ import { NumberTicker } from "@/components/magicui/number-ticker";
 import { DotPattern } from "@/components/magicui/dot-pattern";
 import {
   getDictionary,
+  getLocalizedPath,
   isLocale,
   type Locale,
 } from "@/lib/i18n";
@@ -39,7 +40,7 @@ export async function generateMetadata({
   const { lang } = await params;
   const locale = isLocale(lang) ? lang : "uz";
   const dictionary = getDictionary(locale);
-  const canonicalPath = `/${locale}/projects`;
+  const canonicalPath = getLocalizedPath(locale, "projects");
   const description =
     locale === "uz"
       ? "Frontend loyihalarim va ishlatgan texnologiyalarim ro'yxati."
@@ -50,7 +51,7 @@ export async function generateMetadata({
     description,
     alternates: {
       canonical: canonicalPath,
-      languages: { uz: "/uz/projects", en: "/en/projects" },
+      languages: { uz: "/projects", en: "/en/projects" },
     },
     openGraph: { title: dictionary.metadata.projectsTitle, description, url: canonicalPath },
     twitter: { title: dictionary.metadata.projectsTitle, description },

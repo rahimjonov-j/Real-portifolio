@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Javohirdev.uz",
     short_name: "Javohirdev",
     description: "Javohir Rahimjonov portfolio sayti.",
-    start_url: "/uz",
+    start_url: "/",
     display: "standalone",
     background_color: "#ffffff",
     theme_color: "#233455",

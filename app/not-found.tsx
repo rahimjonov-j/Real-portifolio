@@ -15,7 +15,7 @@ export default function NotFound() {
           </p>
           <Link
             className="inline-flex rounded-full border border-[#d9e2ee] bg-[#111827] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#1e293b] dark:border-[#243142] dark:bg-white dark:text-[#111827] dark:hover:bg-[#e5e7eb]"
-            href="/uz"
+            href="/"
           >
             Go to Home
           </Link>

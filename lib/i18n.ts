@@ -7,6 +7,9 @@ export function isLocale(value: string): value is Locale {
 }
 
 export function getLocalizedPath(locale: Locale, path = "") {
+  if (locale === "uz") {
+    return path ? `/${path}` : "/";
+  }
   return path ? `/${locale}/${path}` : `/${locale}`;
 }
 

@@ -21,7 +21,7 @@ export async function generateMetadata({
   const { lang } = await params;
   const locale = isLocale(lang) ? lang : "uz";
   const dictionary = getDictionary(locale);
-  const canonicalPath = `/${locale}/about`;
+  const canonicalPath = getLocalizedPath(locale, "about");
 
   return {
     title: dictionary.metadata.aboutTitle,
@@ -29,7 +29,7 @@ export async function generateMetadata({
     alternates: {
       canonical: canonicalPath,
       languages: {
-        uz: "/uz/about",
+        uz: "/about",
         en: "/en/about"
       }
     },

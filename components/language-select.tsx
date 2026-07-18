@@ -30,8 +30,13 @@ export function LanguageSelect({
       segments.unshift(nextLocale);
     }
 
+    const nextPath =
+      nextLocale === "uz"
+        ? `/${segments.filter((s) => s !== "uz").join("/")}`
+        : `/${segments.join("/")}`;
+
     startTransition(() => {
-      router.push(`/${segments.join("/")}`);
+      router.push(nextPath === "/" ? "/" : nextPath);
     });
   }
 

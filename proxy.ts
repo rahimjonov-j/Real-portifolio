@@ -18,25 +18,14 @@ export function proxy(request: NextRequest) {
   const firstSegment = segments[0];
 
   if (!firstSegment) {
-    return NextResponse.redirect(new URL("/uz", request.url));
+    return NextResponse.rewrite(new URL("/uz", request.url));
   }
 
   if (supportedLocales.has(firstSegment)) {
     return NextResponse.next();
   }
 
-  if (firstSegment === "about" || firstSegment === "projects") {
-    return NextResponse.redirect(new URL(`/uz/${firstSegment}`, request.url));
-  }
-
-  if (firstSegment === "ru") {
-    const fallbackPath = segments.slice(1).join("/");
-    const nextPath = fallbackPath ? `/uz/${fallbackPath}` : "/uz";
-
-    return NextResponse.redirect(new URL(nextPath, request.url));
-  }
-
-  return NextResponse.redirect(new URL(`/uz${pathname}`, request.url));
+  return NextResponse.redirect(new URL("/en", request.url));
 }
 
 export const config = {

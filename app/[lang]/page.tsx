@@ -3,6 +3,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { PageAnimation } from "@/components/page-animation";
 import { HeroContent } from "@/components/hero-content";
+import { SplashCursorWrapper } from "@/components/splash-cursor-wrapper";
 import {
   getDictionary,
   getLocalizedPath,
@@ -28,9 +29,9 @@ export async function generateMetadata({
     alternates: {
       canonical: canonicalPath,
       languages: {
-        uz: "/",
+        uz: "/uz",
         en: "/en"
-      }
+      },
     },
     openGraph: {
       title: dictionary.metadata.homeTitle,
@@ -51,14 +52,18 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <div className="flex min-h-screen justify-center bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.08),transparent_34%),#ffffff] text-[#333333] transition-colors dark:bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.14),transparent_34%),#090d14] dark:text-[#e5e7eb]">
+      <SplashCursorWrapper />
       <PageAnimation>
         <div className="mx-auto flex min-h-screen w-full max-w-[960px] flex-col px-5 py-5 sm:px-8 sm:py-8">
           <SiteHeader
+            aboutLabel={dictionary.navigation.about}
             currentLocale={locale}
             homeAriaLabel={dictionary.navigation.homeAriaLabel}
             languageLabel={dictionary.navigation.languageLabel}
             languages={dictionary.languages}
             projectsLabel={dictionary.navigation.projects}
+            resumeHref={dictionary.home.resumeHref}
+            resumeLabel={dictionary.navigation.resume}
           />
 
           <main className="flex flex-1 items-center">

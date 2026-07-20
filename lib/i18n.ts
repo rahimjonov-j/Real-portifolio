@@ -7,9 +7,6 @@ export function isLocale(value: string): value is Locale {
 }
 
 export function getLocalizedPath(locale: Locale, path = "") {
-  if (locale === "uz") {
-    return path ? `/${path}` : "/";
-  }
   return path ? `/${locale}/${path}` : `/${locale}`;
 }
 
@@ -22,6 +19,8 @@ type Dictionary = {
   };
   navigation: {
     projects: string;
+    about: string;
+    resume: string;
     languageLabel: string;
     homeAriaLabel: string;
   };
@@ -67,7 +66,7 @@ const sharedProjects = {
   prohome: {
     slug: "prohome",
     title: "ProHome",
-    imageSrc: "/img/optimized/prohome-960.webp",
+    imageSrc: "/img/optimized/prohome.png",
     liveUrl: "https://prohome.uz/",
     githubUrl: "https://github.com/zamonagency/prohome-your-trusted-hub",
     imagePosition: "center top",
@@ -103,7 +102,7 @@ const sharedProjects = {
   moshn: {
     slug: "moshn",
     title: "Moshn",
-    imageSrc: "/img/optimized/moshn-960.webp",
+    imageSrc: "/img/moshn.png",
     liveUrl: "https://www.moshn.uz/",
     githubUrl: "https://github.com/rahimjonov-j/temirxotinhackathon",
     techStack: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL"]
@@ -111,7 +110,7 @@ const sharedProjects = {
   teacherAssistant: {
     slug: "teacher-assistant",
     title: "Teacher Assistant",
-    imageSrc: "/img/optimized/teacher-assistant-960.webp",
+    imageSrc: "/img/optimized/teachir.png",
     liveUrl: "https://teacher-assistantt.vercel.app/",
     githubUrl: "https://github.com/rahimjonov-j/Teacher-assistant",
     techStack: ["React 19", "TypeScript", "Tailwind CSS", "Node.js", "Express"]
@@ -129,6 +128,8 @@ const dictionaries: Record<Locale, Dictionary> = {
     },
     navigation: {
       projects: "Projects",
+      about: "Men haqimda",
+      resume: "Resume",
       languageLabel: "Til",
       homeAriaLabel: "Bosh sahifa"
     },
@@ -221,6 +222,8 @@ const dictionaries: Record<Locale, Dictionary> = {
     },
     navigation: {
       projects: "Projects",
+      about: "About Me",
+      resume: "Resume",
       languageLabel: "Language",
       homeAriaLabel: "Home page"
     },

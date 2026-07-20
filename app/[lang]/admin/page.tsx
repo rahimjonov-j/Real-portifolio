@@ -216,7 +216,7 @@ export default function AdminPage() {
           </div>
           <Link
             className="inline-flex w-fit rounded-full border border-[#dbe4ef] bg-white px-5 py-2.5 font-semibold text-[#111827] transition hover:border-[#bfdbfe] hover:bg-[#eff6ff] dark:border-[#243142] dark:bg-[#111827] dark:text-white dark:hover:border-[#3b82f6] dark:hover:bg-[#172033]"
-            href="/projects"
+            href="/uz/projects"
           >
             Projects
           </Link>

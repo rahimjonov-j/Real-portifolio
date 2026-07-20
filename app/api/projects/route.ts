@@ -63,7 +63,7 @@ function assertAdmin(request: Request) {
 }
 
 function revalidateProjectPages() {
-  revalidatePath("/projects");
+  revalidatePath("/uz/projects");
   revalidatePath("/en/projects");
 }
 

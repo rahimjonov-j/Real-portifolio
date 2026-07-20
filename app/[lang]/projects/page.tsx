@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { ProjectsList } from "@/components/projects-list";
+import { BentoGrid } from "@/components/magicui/bento-grid";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Marquee } from "@/components/magicui/marquee";
-import { NumberTicker } from "@/components/magicui/number-ticker";
 import { DotPattern } from "@/components/magicui/dot-pattern";
 import {
   getDictionary,
@@ -51,7 +50,7 @@ export async function generateMetadata({
     description,
     alternates: {
       canonical: canonicalPath,
-      languages: { uz: "/projects", en: "/en/projects" },
+      languages: { uz: "/uz/projects", en: "/en/projects" },
     },
     openGraph: { title: dictionary.metadata.projectsTitle, description, url: canonicalPath },
     twitter: { title: dictionary.metadata.projectsTitle, description },
@@ -98,25 +97,22 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
 
   const allProjects = [...dictionary.projects.items, ...filteredDynamic];
 
-  const listProjects = allProjects.map((p) => ({
+  const bentoProjects = allProjects.map((p, i) => ({
     slug: p.slug,
     title: p.title,
     description: p.description,
     techStack: p.techStack,
     liveUrl: p.liveUrl,
     githubUrl: p.githubUrl,
+    imageSrc: p.imageSrc,
+    imageAlt: p.imageAlt,
+    imagePosition: p.imagePosition,
     accent: PROJECT_META[p.slug]?.accent ?? DEFAULT_ACCENT,
-    featured: PROJECT_META[p.slug]?.featured ?? false,
+    span: (i === 0 || i === 3 ? 2 : 1) as 1 | 2,
   }));
 
   // All unique tech stacks for the marquee
   const allTechs = [...new Set(allProjects.flatMap((p) => p.techStack))];
-  const count = allProjects.length;
-
-  const headingWords = dictionary.projects.heading.split(" ");
-  const boldWord = headingWords.pop();
-  const lightWords = headingWords.join(" ");
-  const countLabel = locale === "uz" ? "loyiha" : "projects";
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-white px-5 py-7 text-[#18181B] transition-colors dark:bg-[#09090B] dark:text-[#FAFAFA] sm:px-10">
@@ -132,36 +128,15 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
 
       <div className="relative mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-[900px] flex-col">
         <SiteHeader
+          aboutLabel={dictionary.navigation.about}
           currentLocale={locale}
           homeAriaLabel={dictionary.navigation.homeAriaLabel}
           languageLabel={dictionary.navigation.languageLabel}
           languages={dictionary.languages}
           projectsLabel={dictionary.navigation.projects}
+          resumeHref={dictionary.home.resumeHref}
+          resumeLabel={dictionary.navigation.resume}
         />
-
-        {/* ── Page header ─────────────────────────────────────── */}
-        <div className="mb-6 pt-4">
-          <div className="mb-2 flex items-end justify-between">
-            <h1 className="text-[38px] leading-none tracking-[-1.5px] text-[#18181B] dark:text-[#FAFAFA]">
-              {lightWords && <span className="font-light">{lightWords} </span>}
-              <span className="font-bold">{boldWord}</span>
-            </h1>
-
-            {/* NumberTicker project count badge */}
-            <div className="flex items-center gap-1.5 rounded-full border border-[#E4E4E7] bg-[#F4F4F5] px-3 py-1.5 dark:border-[#27272A] dark:bg-[#18181B]">
-              <span className="font-mono text-sm font-bold tabular-nums text-[#18181B] dark:text-[#FAFAFA]">
-                <NumberTicker value={count} />
-              </span>
-              <span className="text-sm text-[#71717A] dark:text-[#52525B]">{countLabel}</span>
-            </div>
-          </div>
-
-          <p className="text-sm text-[#71717A] dark:text-[#52525B]">
-            {locale === "uz"
-              ? "Qurilgan va nashr etilgan loyihalar"
-              : "Built and shipped projects"}
-          </p>
-        </div>
 
         {/* ── Tech stack marquee ───────────────────────────────── */}
         <div className="mb-8 overflow-hidden rounded-2xl border border-[#E4E4E7] bg-[#FAFAFA] py-3 dark:border-[#27272A] dark:bg-[#111111]">
@@ -177,8 +152,12 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
           </Marquee>
         </div>
 
-        {/* ── Project list ─────────────────────────────────────── */}
-        <ProjectsList projects={listProjects} />
+        {/* ── Bento grid ─────────────────────────────────────── */}
+        <BentoGrid
+          projects={bentoProjects}
+          liveLabel={locale === "uz" ? "Live" : "Live"}
+          githubLabel="GitHub"
+        />
 
         <SiteFooter />
       </div>

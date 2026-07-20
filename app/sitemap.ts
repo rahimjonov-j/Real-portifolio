@@ -2,11 +2,11 @@ import type { MetadataRoute } from "next";
 
 const siteUrl = "https://javohirdev.uz";
 const routes = [
-  "/",
+  "/uz",
   "/en",
-  "/about",
+  "/uz/about",
   "/en/about",
-  "/projects",
+  "/uz/projects",
   "/en/projects"
 ];
 
@@ -15,6 +15,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${siteUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: "weekly",
-    priority: route === "/" || route === "/en" ? 1 : 0.8
+    priority: route === "/uz" || route === "/en" ? 1 : 0.8
   }));
 }

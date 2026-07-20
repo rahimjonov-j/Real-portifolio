@@ -29,9 +29,9 @@ export async function generateMetadata({
     alternates: {
       canonical: canonicalPath,
       languages: {
-        uz: "/about",
+        uz: "/uz/about",
         en: "/en/about"
-      }
+      },
     },
     openGraph: {
       title: dictionary.metadata.aboutTitle,
@@ -55,11 +55,14 @@ export default async function AboutPage({ params }: AboutPageProps) {
       <PageAnimation>
         <div className="mx-auto flex w-full max-w-[900px] flex-col">
           <SiteHeader
+            aboutLabel={dictionary.navigation.about}
             currentLocale={locale}
             homeAriaLabel={dictionary.navigation.homeAriaLabel}
             languageLabel={dictionary.navigation.languageLabel}
             languages={dictionary.languages}
             projectsLabel={dictionary.navigation.projects}
+            resumeHref={dictionary.home.resumeHref}
+            resumeLabel={dictionary.navigation.resume}
           />
 
           <main className="flex flex-1 items-center justify-center py-10">

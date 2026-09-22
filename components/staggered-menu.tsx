@@ -120,7 +120,7 @@ export function StaggeredMenu({
         {/* Menu panel */}
         <div
           ref={menuRef}
-          className={`absolute right-0 top-full z-50 mt-2 w-[260px] origin-top-right overflow-hidden rounded-2xl border border-[#E4E4E7] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.12)] transition-all duration-300 dark:border-[#27272A] dark:bg-[#09090B] dark:shadow-[0_20px_60px_rgba(0,0,0,0.5)] ${
+          className={`absolute right-0 top-full z-50 mt-2 w-[260px] origin-top-right rounded-2xl border border-[#E4E4E7] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.12)] transition-all duration-300 dark:border-[#27272A] dark:bg-[#09090B] dark:shadow-[0_20px_60px_rgba(0,0,0,0.5)] ${
             isOpen
               ? "scale-100 opacity-100"
               : "pointer-events-none scale-95 opacity-0"
